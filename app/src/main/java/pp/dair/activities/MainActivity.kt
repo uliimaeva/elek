@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var datePicker: DatePicker
     private lateinit var calendarButton: ImageButton
+    private lateinit var checkButton: ImageButton
 
 
     var day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -53,24 +54,21 @@ class MainActivity : AppCompatActivity() {
 
     fun setData() {
         val today = Calendar.getInstance()
-        val date = Calendar.getInstance()
-
         datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)
 
         ) { _, year, month, day ->
             val month = month + 1
-            date.set(year, month, day)
-            header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(date.get(Calendar.DAY_OF_WEEK)))
+            calendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
+            header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK)))
             this.day = datePicker.dayOfMonth
             this.year = datePicker.year
             this.month = datePicker.month
+            loadSchedule()
         }
-
     }
 
     fun loadSchedule() {
-        header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK)))
         viewModel.getDaySchedule(year, month, day, object: Callback<ArrayList<LessonWithMark>> {
             override fun onResponse(
                 call: Call<ArrayList<LessonWithMark>>,
@@ -135,8 +133,11 @@ class MainActivity : AppCompatActivity() {
         header = findViewById(R.id.r_date)
         datePicker = findViewById(R.id.datePicker1)
         calendarButton = findViewById(R.id.calendar)
+        checkButton = findViewById(R.id.check)
         left_button = findViewById(R.id.left)
         right_button = findViewById(R.id.right)
+
+        header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK)))
 
         left_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, -1)
@@ -157,18 +158,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun choseDate() {
-        var vis = true
         calendarButton.setOnClickListener {
-            when (datePicker.visibility) {
-                View.VISIBLE -> vis = true
-                View.GONE -> vis = false
-            }
-            if (vis == false) {
-                datePicker.visibility = View.VISIBLE
-            } else {
-                datePicker.visibility = View.GONE
-                setData()
-            }
+            datePicker.visibility = View.VISIBLE
+            checkButton.visibility = View.VISIBLE
+            calendarButton.visibility = View.GONE
+        }
+        checkButton.setOnClickListener {
+            datePicker.visibility = View.GONE
+            checkButton.visibility = View.GONE
+            calendarButton.visibility = View.VISIBLE
+            Toast.makeText(this, "писька", Toast.LENGTH_SHORT).show()
+            setData()
         }
     }
 }
