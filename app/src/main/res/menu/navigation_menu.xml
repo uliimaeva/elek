@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/p_journal"
+        android:icon="@drawable/ic_journal"
+        android:title="Журнал" />
+    <item
+        android:id="@+id/p_ExitProfile"
+        android:icon="@drawable/round_logout_24"
+        android:title="Выйти из аккаунта"/>
+
+    <item
+        android:id="@+id/p_Exit"
+        android:icon="@drawable/round_logout_24"
+        android:title="Выход" />
+</menu>
