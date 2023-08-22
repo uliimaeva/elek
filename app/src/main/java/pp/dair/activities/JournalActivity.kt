@@ -1,5 +1,6 @@
 package pp.dair.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
 import pp.dair.adapters.JournalAdapter
-import pp.dair.adapters.ScheduleAdapter
 import pp.dair.models.JournalMark
 import pp.dair.retrofit.Common
 import pp.dair.viewmodels.MarksViewModel
@@ -79,6 +79,10 @@ class JournalActivity : AppCompatActivity() {
         }
     }
 
+    private fun openSchedule() {
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
@@ -95,7 +99,10 @@ class JournalActivity : AppCompatActivity() {
         rightButton = findViewById(R.id.j_right)
         leftButton.setOnClickListener { setPrevSemester() }
         rightButton.setOnClickListener { setNextSemester() }
+        backButton.setOnClickListener { openSchedule() }
     }
+
+
 
     fun loadSemesterMarks() {
         header.text = String.format("%d семестр, %d курс", semester, course)

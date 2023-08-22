@@ -141,10 +141,18 @@ class MainActivity : AppCompatActivity() {
 
         left_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, -1)
+            this.day = calendar.get(Calendar.DAY_OF_MONTH)
+            this.year = calendar.get(Calendar.YEAR)
+            this.month = calendar.get(Calendar.MONTH) + 1
+            header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK)))
             loadSchedule()
         }
         right_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
+            this.day = calendar.get(Calendar.DAY_OF_MONTH)
+            this.year = calendar.get(Calendar.YEAR)
+            this.month = calendar.get(Calendar.MONTH) + 1
+            header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK)))
             loadSchedule()
         }
 
