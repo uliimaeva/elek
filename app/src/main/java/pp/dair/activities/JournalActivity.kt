@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
 import pp.dair.R
 import pp.dair.adapters.JournalAdapter
 import pp.dair.models.JournalMark
@@ -32,6 +33,9 @@ class JournalActivity : AppCompatActivity() {
     private lateinit var adapter: JournalAdapter
     var viewModel: MarksViewModel = MarksViewModel()
 
+
+    var s = 6
+
     fun getCurrentSemester(): Pair<Int, Int> {
         val month = calendar.get(Calendar.MONTH)
         if (arrayListOf(8, 9, 10, 11).contains(month)) {
@@ -48,34 +52,55 @@ class JournalActivity : AppCompatActivity() {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
-    fun setNextSemester() {
-        assert(semester != -1)
-        assert(course != -1)
-        if (semester != 2) {
-            semester += 1
-            loadSemesterMarks()
-            return
-        }
-        if (course != 4) {
-            semester = 1
-            course += 1
-            loadSemesterMarks()
-            return
-        }
-    }
+    fun setSemester() {
+        when (s) {
+            1 -> {
+                semester = 1
+                course = 1
+                loadSemesterMarks()
+            }
 
-    fun setPrevSemester() {
-        assert(semester != -1)
-        assert(course != -1)
-        if (semester != 1) {
-            semester -= 1
-            loadSemesterMarks()
-            return
-        }
-        if (course != 1) {
-            course -= 1
-            loadSemesterMarks()
-            return
+            2 -> {
+                semester = 2
+                course = 1
+                loadSemesterMarks()
+            }
+
+            3 -> {
+                semester = 1
+                course = 2
+                loadSemesterMarks()
+            }
+
+            4 -> {
+                semester = 2
+                course = 2
+                loadSemesterMarks()
+            }
+
+            5 -> {
+                semester = 1
+                course = 3
+                loadSemesterMarks()
+            }
+
+            6 -> {
+                semester = 2
+                course = 3
+                loadSemesterMarks()
+            }
+
+            7 -> {
+                semester = 1
+                course = 4
+                loadSemesterMarks()
+            }
+
+            8 -> {
+                semester = 2
+                course = 4
+                loadSemesterMarks()
+            }
         }
     }
 
@@ -86,10 +111,11 @@ class JournalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
+
         adapter = JournalAdapter(ArrayList())
-        val (course, semester) = getCurrentSemester()
-        this.course = course
-        this.semester = semester
+        //val (course, semester) = getCurrentSemester()
+        this.course = 3
+        this.semester = 2
         header = findViewById(R.id.j_date)
         backButton = findViewById(R.id.j_back)
         recyclerView = findViewById(R.id.r_recycler)
@@ -97,28 +123,45 @@ class JournalActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         leftButton = findViewById(R.id.j_left)
         rightButton = findViewById(R.id.j_right)
-        leftButton.setOnClickListener { setPrevSemester() }
-        rightButton.setOnClickListener { setNextSemester() }
-        backButton.setOnClickListener { openSchedule() }
-    }
 
+        leftButton.setOnClickListener {
+            while (s != 1){
+                s--
+                break
+            }
+            setSemester()
+        }
+        rightButton.setOnClickListener {
+            while (s != 8){
+                s++
+                break
+            }
+            setSemester()
+        }
+
+        backButton.setOnClickListener { openSchedule() }
+        loadSemesterMarks()
+    }
 
 
     fun loadSemesterMarks() {
         header.text = String.format("%d семестр, %d курс", semester, course)
-        viewModel.getSemesterMarks(getAcademicYear(), semester, object : Callback<ArrayList<JournalMark>> {
-            override fun onResponse(
-                call: Call<ArrayList<JournalMark>>,
-                response: Response<ArrayList<JournalMark>>
-            ) {
-                if (response.isSuccessful) {
-                    adapter.setArray(response.body()!!)
+        viewModel.getSemesterMarks(
+            getAcademicYear(),
+            semester,
+            object : Callback<ArrayList<JournalMark>> {
+                override fun onResponse(
+                    call: Call<ArrayList<JournalMark>>,
+                    response: Response<ArrayList<JournalMark>>
+                ) {
+                    if (response.isSuccessful) {
+                        adapter.setArray(response.body()!!)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ArrayList<JournalMark>>, t: Throwable) {
-                showToast("Ошибка!")
-            }
-        })
+                override fun onFailure(call: Call<ArrayList<JournalMark>>, t: Throwable) {
+                    showToast("Ошибка!")
+                }
+            })
     }
 }
