@@ -63,8 +63,8 @@ class MainActivity : AppCompatActivity() {
             header.text = String.format("%d.%d.%d %s", day, month, year, numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK)))
             this.day = datePicker.dayOfMonth
             this.year = datePicker.year
-            this.month = datePicker.month
-            loadSchedule()
+            this.month = datePicker.month + 1
+
         }
     }
 
@@ -154,21 +154,20 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
         loadSchedule()
-        choseDate()
-    }
 
-    private fun choseDate() {
         calendarButton.setOnClickListener {
             datePicker.visibility = View.VISIBLE
             checkButton.visibility = View.VISIBLE
             calendarButton.visibility = View.GONE
+            setData()
         }
         checkButton.setOnClickListener {
             datePicker.visibility = View.GONE
             checkButton.visibility = View.GONE
             calendarButton.visibility = View.VISIBLE
             Toast.makeText(this, "писька", Toast.LENGTH_SHORT).show()
-            setData()
+            loadSchedule()
         }
     }
+
 }
