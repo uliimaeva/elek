@@ -3,6 +3,7 @@ package pp.dair.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +27,7 @@ class JournalActivity : AppCompatActivity() {
     private lateinit var leftButton: ImageButton
     private lateinit var rightButton: ImageButton
     private lateinit var header: TextView
+    private lateinit var marks: TextView
     private var semester: Int = -1
     private var course: Int = -1
     private var calendar = Calendar.getInstance()
@@ -33,12 +35,11 @@ class JournalActivity : AppCompatActivity() {
     private lateinit var adapter: JournalAdapter
     var viewModel: MarksViewModel = MarksViewModel()
 
-
-    var s = 6
+    var s = 7
 
     fun getCurrentSemester(): Pair<Int, Int> {
         val month = calendar.get(Calendar.MONTH)
-        if (arrayListOf(8, 9, 10, 11).contains(month)) {
+        if (arrayListOf(7, 8, 9, 10, 11).contains(month)) {
             return Pair(Common.studentInfo!!.group.course, 1)
         }
         return Pair(Common.studentInfo!!.group.course, 2)
@@ -113,9 +114,9 @@ class JournalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_journal)
 
         adapter = JournalAdapter(ArrayList())
-        //val (course, semester) = getCurrentSemester()
-        this.course = 3
-        this.semester = 2
+        val (course, semester) = getCurrentSemester()
+        this.course = course
+        this.semester = semester
         header = findViewById(R.id.j_date)
         backButton = findViewById(R.id.j_back)
         recyclerView = findViewById(R.id.r_recycler)
@@ -141,6 +142,7 @@ class JournalActivity : AppCompatActivity() {
 
         backButton.setOnClickListener { openSchedule() }
         loadSemesterMarks()
+
     }
 
 

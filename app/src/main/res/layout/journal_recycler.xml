@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:text="Писька"
+                    android:text="Предмет"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
                 <TextView
@@ -37,9 +37,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:textSize="20sp"
-                    android:text="2 3 4 1 2 2 3 2 1 3 1 2 1"/>
-
+                    android:text="2 3 4 1 2 2 3 2 1 3 1 2 1"
+                    android:visibility="gone"/>
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/arrowButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:src="@drawable/ic_down"
+                android:background="@color/trans"/>
+            <ImageButton
+                android:id="@+id/arrowButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:src="@drawable/ic_up"
+                android:background="@color/trans"
+                android:clickable="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

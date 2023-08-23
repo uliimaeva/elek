@@ -1,9 +1,11 @@
 package pp.dair.adapters
 
 import android.app.Activity
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,10 @@ class JournalAdapter(
         val marks: TextView = itemView.findViewById(R.id.marks)
         val main_mark: TextView = itemView.findViewById(R.id.main_mark)
         val average: TextView = itemView.findViewById(R.id.abc_mark)
+        val arrowButton1: ImageButton = itemView.findViewById(R.id.arrowButton1)
+        val arrowButton2: ImageButton = itemView.findViewById(R.id.arrowButton2)
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -62,6 +68,26 @@ class JournalAdapter(
             holder.average.text = "-"
         }
         holder.marks.text = getRow(grouppedData[position].second)
+
+        holder.arrowButton1.setOnClickListener{
+            holder.arrowButton2.isClickable = true
+            holder.arrowButton1.isClickable = false
+
+            holder.arrowButton2.setColorFilter(Color.parseColor("#1C2E45"))
+            holder.arrowButton1.setColorFilter(Color.GRAY)
+
+            holder.marks.visibility = View.VISIBLE
+        }
+        holder.arrowButton2.setOnClickListener{
+            holder.arrowButton2.isClickable = false
+            holder.arrowButton1.isClickable = true
+            holder.marks.visibility = View.GONE
+
+            holder.arrowButton1.setColorFilter(Color.parseColor("#1C2E45"))
+            holder.arrowButton2.setColorFilter(Color.GRAY)
+        }
+
+
     }
 
     fun setArray(array: ArrayList<JournalMark>) {
