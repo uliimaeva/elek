@@ -69,6 +69,8 @@ class JournalAdapter(
         }
         holder.marks.text = getRow(grouppedData[position].second)
 
+        holder.arrowButton2.setColorFilter(Color.GRAY)
+
         holder.arrowButton1.setOnClickListener{
             holder.arrowButton2.isClickable = true
             holder.arrowButton1.isClickable = false

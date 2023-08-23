@@ -173,7 +173,6 @@ class MainActivity : AppCompatActivity() {
             datePicker.visibility = View.GONE
             checkButton.visibility = View.GONE
             calendarButton.visibility = View.VISIBLE
-            Toast.makeText(this, "писька", Toast.LENGTH_SHORT).show()
             loadSchedule()
         }
     }
