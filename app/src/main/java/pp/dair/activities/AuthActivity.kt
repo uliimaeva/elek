@@ -83,6 +83,14 @@ class AuthActivity : AppCompatActivity() {
         })
 
         btn_register.setOnClickListener { checkForm() }
+
+        //cleanFields()
+    }
+
+    private fun cleanFields() {
+        login_tiet.setText("")
+        password_tiet.setText("")
+        captcha_tiet.setText("")
     }
 
     private fun checkForm() {
