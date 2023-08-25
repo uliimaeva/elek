@@ -5,9 +5,12 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
 import pp.dair.models.JournalMark
@@ -25,6 +28,7 @@ class JournalAdapter(
         val average: TextView = itemView.findViewById(R.id.abc_mark)
         val arrowButton1: ImageButton = itemView.findViewById(R.id.arrowButton1)
         val arrowButton2: ImageButton = itemView.findViewById(R.id.arrowButton2)
+        val scrollView: NestedScrollView = itemView.findViewById(R.id.scrollView)
 
 
     }
@@ -74,16 +78,15 @@ class JournalAdapter(
         holder.arrowButton1.setOnClickListener{
             holder.arrowButton2.isClickable = true
             holder.arrowButton1.isClickable = false
+            holder.scrollView.visibility = View.VISIBLE
 
             holder.arrowButton2.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton1.setColorFilter(Color.GRAY)
-
-            holder.marks.visibility = View.VISIBLE
         }
         holder.arrowButton2.setOnClickListener{
             holder.arrowButton2.isClickable = false
             holder.arrowButton1.isClickable = true
-            holder.marks.visibility = View.GONE
+            holder.scrollView.visibility = View.GONE
 
             holder.arrowButton1.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton2.setColorFilter(Color.GRAY)

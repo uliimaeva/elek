@@ -64,12 +64,18 @@
                 android:layout_weight="0"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/j_menu"
-            android:layout_margin="10dp"
-            android:id="@+id/r_recycler"/>
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/j_menu">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/j_menu"
+                android:layout_margin="10dp"
+                android:id="@+id/r_recycler"/>
+        </ScrollView>
     </RelativeLayout>
 
 </RelativeLayout>
