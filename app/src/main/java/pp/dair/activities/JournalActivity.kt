@@ -113,7 +113,7 @@ class JournalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
 
-        adapter = JournalAdapter(ArrayList())
+        adapter = JournalAdapter(ArrayList(), this)
         val (course, semester) = getCurrentSemester()
         this.course = course
         this.semester = semester

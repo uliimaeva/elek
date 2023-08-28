@@ -11,19 +11,24 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.withContext
 import pp.dair.R
+import pp.dair.activities.JournalActivity
 import pp.dair.models.JournalMark
 import kotlin.math.roundToInt
 
 class JournalAdapter(
-    private var marksArray: ArrayList<JournalMark>
+    private var marksArray: ArrayList<JournalMark>,
+    private val activity: Activity
 ): RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
     private var grouppedData: ArrayList<Pair<String, ArrayList<JournalMark>>> = ArrayList()
 
     class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val subject: TextView = itemView.findViewById(R.id.sub_name)
-        val marks: TextView = itemView.findViewById(R.id.marks)
+        val marks: RecyclerView = itemView.findViewById(R.id.recyclerViewMarks)
         val main_mark: TextView = itemView.findViewById(R.id.main_mark)
         val average: TextView = itemView.findViewById(R.id.abc_mark)
         val arrowButton1: ImageButton = itemView.findViewById(R.id.arrowButton1)
@@ -71,7 +76,7 @@ class JournalAdapter(
             holder.main_mark.text = "-"
             holder.average.text = "-"
         }
-        holder.marks.text = getRow(grouppedData[position].second)
+//        holder.marks.text = getRow(grouppedData[position].second)
 
         holder.arrowButton2.setColorFilter(Color.GRAY)
 
@@ -91,6 +96,10 @@ class JournalAdapter(
             holder.arrowButton1.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton2.setColorFilter(Color.GRAY)
         }
+
+        val adapter = ScheduleAdapter(ArrayList(), activity)
+        holder.marks.layoutManager = GridLayoutManager(activity, 2)
+        holder.marks.adapter = adapter
 
 
     }

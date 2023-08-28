@@ -1,23 +1,22 @@
 package pp.dair.activities
 
 import android.annotation.SuppressLint
+import android.app.NotificationManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
@@ -28,11 +27,20 @@ import pp.dair.viewmodels.MarksViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.DayOfWeek
 import java.util.Calendar
 import kotlin.system.exitProcess
 
+
 class MainActivity : AppCompatActivity() {
+
+
+    companion object {
+        const val NOTIFICATION_ID = 101
+        const val CHANNEL_ID = "channelID"
+    }
+
+
+
     private var viewModel: MarksViewModel = MarksViewModel()
     private lateinit var recyclerView: RecyclerView
     lateinit var adapter: ScheduleAdapter
@@ -116,7 +124,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("MissingPermission")
     fun showToast(text: String) {
+        val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("Title")
+            .setContentText("Notification text")
+
+        val notification = builder.build()
+
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(1, notification)
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 

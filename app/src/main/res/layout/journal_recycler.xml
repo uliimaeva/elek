@@ -34,19 +34,17 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                    <TextSwitcher
+                    <ScrollView
                         android:id="@+id/scrollView"
                         android:layout_width="250dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="15dp">
 
-                        <TextView
-                            android:id="@+id/marks"
-                            android:layout_width="250dp"
-                            android:layout_height="wrap_content"
-                            android:text="3 4 1 2 2 3 2 1 1 3 1 2 3 4 1 2 2 3 2 1 1 3 1 2 "
-                            android:textSize="20sp" />
-                    </TextSwitcher>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewMarks"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </ScrollView>
             </LinearLayout>
 
             <ImageButton
