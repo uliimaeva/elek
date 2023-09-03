@@ -118,6 +118,11 @@ class AuthActivity : AppCompatActivity() {
         }
 
         if (captcha_til.error == null && login_til.error == null && captcha_til.error == null) {
+            if (Common.sessionId == null) {
+                showToast("Подождите загрузки формы!")
+                return;
+            }
+
             viewModel.loginCallback(object : Callback<LoginResponse> {
                 override fun onResponse(
                     call: Call<LoginResponse>,

@@ -113,7 +113,7 @@ class JournalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
 
-        adapter = JournalAdapter(ArrayList(), this)
+        adapter = JournalAdapter(emptyMap(), this)
         val (course, semester) = getCurrentSemester()
         this.course = course
         this.semester = semester
@@ -148,20 +148,20 @@ class JournalActivity : AppCompatActivity() {
 
     fun loadSemesterMarks() {
         header.text = String.format("%d семестр, %d курс", semester, course)
-        viewModel.getSemesterMarks(
+        viewModel.getSegmentedSemesterMarks(
             getAcademicYear(),
             semester,
-            object : Callback<ArrayList<JournalMark>> {
+            object : Callback<Map<String, ArrayList<JournalMark>>> {
                 override fun onResponse(
-                    call: Call<ArrayList<JournalMark>>,
-                    response: Response<ArrayList<JournalMark>>
+                    call: Call<Map<String, ArrayList<JournalMark>>>,
+                    response: Response<Map<String, ArrayList<JournalMark>>>
                 ) {
                     if (response.isSuccessful) {
                         adapter.setArray(response.body()!!)
                     }
                 }
 
-                override fun onFailure(call: Call<ArrayList<JournalMark>>, t: Throwable) {
+                override fun onFailure(call: Call<Map<String, ArrayList<JournalMark>>>, t: Throwable) {
                     showToast("Ошибка!")
                 }
             })
