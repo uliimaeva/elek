@@ -17,48 +17,28 @@ import pp.dair.models.JournalMark
 import kotlin.math.roundToInt
 
 class MarksAdapter(
-    private var marksArray: ArrayList<JournalMark>
+    private var marksArray: ArrayList<JournalMark>,
+    private val activity: Activity
 ): RecyclerView.Adapter<MarksAdapter.MyViewHolder>() {
-    private var grouppedData: ArrayList<Pair<String, ArrayList<JournalMark>>> = ArrayList()
-
     class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-        val marks: TextView = itemView.findViewById(R.id.text)
+        val marks: TextView = itemView.findViewById(R.id.markText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.journal_recycler, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.marks_recycler_view, parent, false)
         return MyViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: MarksAdapter.MyViewHolder, position: Int) {
-        holder.marks.text = getRow(grouppedData[position].second)
+        holder.marks.text = String.format("%s", marksArray[position].mark)
     }
 
     override fun getItemCount(): Int {
-        return grouppedData.size
-    }
-
-    fun getRow(array: ArrayList<JournalMark>): String {
-        var res = ""
-        for (el in array.filter { it.mark.length > 0 }) {
-            res += el.mark + " "
-        }
-        return res
+        return marksArray.size
     }
 
     fun setArray(array: ArrayList<JournalMark>) {
         this.marksArray = array
-        groupMarks()
         notifyDataSetChanged()
-    }
-
-    fun groupMarks() {
-        val subjects: Set<String> = marksArray.map { it.subject }.toSet()
-        val res: ArrayList<Pair<String, ArrayList<JournalMark>>> = ArrayList()
-        for (subject in subjects) {
-            val filtered_marks = marksArray.filter { it.subject == subject }
-            res.add(Pair(subject, ArrayList(filtered_marks.toList())))
-        }
-        grouppedData = res
     }
 }
