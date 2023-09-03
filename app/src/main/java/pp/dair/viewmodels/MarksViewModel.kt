@@ -13,4 +13,8 @@ class MarksViewModel {
     fun getSemesterMarks(year: Int, semester: Int, callback: Callback<ArrayList<JournalMark>>) {
         Common.retrofitService.getSemesterMarks(Common.sessionId!!, year, semester).enqueue(callback)
     }
+
+    fun getSegmentedSemesterMarks(year: Int, semester: Int, callback: Callback<Map<String, ArrayList<JournalMark>>>) {
+        Common.retrofitService.getSegmentedSemesterMarks(Common.sessionId!!, year, semester).enqueue(callback)
+    }
 }

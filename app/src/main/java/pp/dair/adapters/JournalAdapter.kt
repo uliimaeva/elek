@@ -18,13 +18,14 @@ import kotlinx.coroutines.withContext
 import pp.dair.R
 import pp.dair.activities.JournalActivity
 import pp.dair.models.JournalMark
+import java.util.TreeMap
 import kotlin.math.roundToInt
 
 class JournalAdapter(
-    private var marksArray: ArrayList<JournalMark>,
+    private var marksMap: Map<String, ArrayList<JournalMark>>,
     private val activity: Activity
 ): RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
-    private var grouppedData: ArrayList<Pair<String, ArrayList<JournalMark>>> = ArrayList()
+    private var orderedMap: TreeMap<String, ArrayList<JournalMark>> = TreeMap(marksMap)
 
     class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val subject: TextView = itemView.findViewById(R.id.sub_name)
@@ -33,9 +34,7 @@ class JournalAdapter(
         val average: TextView = itemView.findViewById(R.id.abc_mark)
         val arrowButton1: ImageButton = itemView.findViewById(R.id.arrowButton1)
         val arrowButton2: ImageButton = itemView.findViewById(R.id.arrowButton2)
-        val scrollView: NestedScrollView = itemView.findViewById(R.id.scrollView)
-
-
+        val scrollView: ScrollView = itemView.findViewById(R.id.scrollView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -44,7 +43,7 @@ class JournalAdapter(
     }
 
     override fun getItemCount(): Int {
-        return grouppedData.size
+        return orderedMap.size
     }
 
     fun countAverage(array: ArrayList<JournalMark>): Double {
@@ -67,8 +66,9 @@ class JournalAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.subject.text = grouppedData[position].first
-        val avg = countAverage(grouppedData[position].second)
+        val tpl = orderedMap.toList().get(position)
+        holder.subject.text = tpl.first
+        val avg = countAverage(tpl.second)
         if (!avg.isNaN()) {
             holder.main_mark.text = avg.roundToInt().toString()
             holder.average.text = avg.toString().take(3)
@@ -97,26 +97,14 @@ class JournalAdapter(
             holder.arrowButton2.setColorFilter(Color.GRAY)
         }
 
-        val adapter = ScheduleAdapter(ArrayList(), activity)
+        val adapter = MarksAdapter(ArrayList(tpl.second.filter { it.mark.length > 0 }), activity)
         holder.marks.layoutManager = GridLayoutManager(activity, 2)
         holder.marks.adapter = adapter
-
-
     }
 
-    fun setArray(array: ArrayList<JournalMark>) {
-        this.marksArray = array
-        groupMarks()
+    fun setArray(map: Map<String, ArrayList<JournalMark>>) {
+        this.marksMap = map
+        this.orderedMap = TreeMap(map)
         notifyDataSetChanged()
-    }
-
-    fun groupMarks() {
-        val subjects: Set<String> = marksArray.map { it.subject }.toSet()
-        val res: ArrayList<Pair<String, ArrayList<JournalMark>>> = ArrayList()
-        for (subject in subjects) {
-            val filtered_marks = marksArray.filter { it.subject == subject }
-            res.add(Pair(subject, ArrayList(filtered_marks.toList())))
-        }
-        grouppedData = res
     }
 }

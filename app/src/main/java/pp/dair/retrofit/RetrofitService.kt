@@ -36,6 +36,13 @@ interface RetrofitService {
         @Query("semester") semester: Int
     ): Call<ArrayList<JournalMark>>
 
+    @GET("marks/semester/segmented")
+    fun getSegmentedSemesterMarks(
+        @Header("Session") session: String,
+        @Query("year") year: Int,
+        @Query("semester") semester: Int
+    ): Call<Map<String, ArrayList<JournalMark>>>
+
     @GET("student")
     fun getStudentInfo(
         @Header("Session") session: String
