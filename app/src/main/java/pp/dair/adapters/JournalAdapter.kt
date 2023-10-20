@@ -34,7 +34,7 @@ class JournalAdapter(
         val average: TextView = itemView.findViewById(R.id.abc_mark)
         val arrowButton1: ImageButton = itemView.findViewById(R.id.arrowButton1)
         val arrowButton2: ImageButton = itemView.findViewById(R.id.arrowButton2)
-        val scrollView: ScrollView = itemView.findViewById(R.id.scrollView)
+        val recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerViewMarks)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -83,7 +83,7 @@ class JournalAdapter(
         holder.arrowButton1.setOnClickListener{
             holder.arrowButton2.isClickable = true
             holder.arrowButton1.isClickable = false
-            holder.scrollView.visibility = View.VISIBLE
+            holder.recyclerView.visibility = View.VISIBLE
 
             holder.arrowButton2.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton1.setColorFilter(Color.GRAY)
@@ -91,7 +91,7 @@ class JournalAdapter(
         holder.arrowButton2.setOnClickListener{
             holder.arrowButton2.isClickable = false
             holder.arrowButton1.isClickable = true
-            holder.scrollView.visibility = View.GONE
+            holder.recyclerView.visibility = View.GONE
 
             holder.arrowButton1.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton2.setColorFilter(Color.GRAY)

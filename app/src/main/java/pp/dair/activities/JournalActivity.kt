@@ -46,7 +46,13 @@ class JournalActivity : AppCompatActivity() {
     }
 
     fun getAcademicYear(): Int {
-        return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
+        if (semester/2 == 0) {
+            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
+        }
+        else{
+            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course + 1
+        }
+
     }
 
     fun showToast(text: String) {
@@ -114,7 +120,7 @@ class JournalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_journal)
 
         adapter = JournalAdapter(emptyMap(), this)
-        val (course, semester) = getCurrentSemester()
+        //val (course, semester) = getCurrentSemester()
         this.course = course
         this.semester = semester
         header = findViewById(R.id.j_date)
@@ -124,6 +130,8 @@ class JournalActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         leftButton = findViewById(R.id.j_left)
         rightButton = findViewById(R.id.j_right)
+
+        setSemester()
 
         leftButton.setOnClickListener {
             while (s != 1){
