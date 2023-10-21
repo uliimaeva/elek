@@ -22,6 +22,7 @@ class MarksAdapter(
 ): RecyclerView.Adapter<MarksAdapter.MyViewHolder>() {
     class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val marks: TextView = itemView.findViewById(R.id.markText)
+        val date: TextView = itemView.findViewById(R.id.dateText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -31,6 +32,8 @@ class MarksAdapter(
 
     override fun onBindViewHolder(holder: MarksAdapter.MyViewHolder, position: Int) {
         holder.marks.text = String.format("%s", marksArray[position].mark)
+        val date = marksArray[position].date
+        holder.date.text = String.format("%02d.%02d.%d", date.day, date.month + 1, date.year-100);
     }
 
     override fun getItemCount(): Int {

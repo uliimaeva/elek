@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
@@ -35,6 +36,7 @@ class JournalAdapter(
         val arrowButton1: ImageButton = itemView.findViewById(R.id.arrowButton1)
         val arrowButton2: ImageButton = itemView.findViewById(R.id.arrowButton2)
         val recyclerView: RecyclerView = itemView.findViewById(R.id.recyclerViewMarks)
+        val markmark: LinearLayout = itemView.findViewById(R.id.maaarks)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -83,7 +85,7 @@ class JournalAdapter(
         holder.arrowButton1.setOnClickListener{
             holder.arrowButton2.isClickable = true
             holder.arrowButton1.isClickable = false
-            holder.recyclerView.visibility = View.VISIBLE
+            holder.markmark.visibility = View.VISIBLE
 
             holder.arrowButton2.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton1.setColorFilter(Color.GRAY)
@@ -91,14 +93,14 @@ class JournalAdapter(
         holder.arrowButton2.setOnClickListener{
             holder.arrowButton2.isClickable = false
             holder.arrowButton1.isClickable = true
-            holder.recyclerView.visibility = View.GONE
+            holder.markmark.visibility = View.GONE
 
             holder.arrowButton1.setColorFilter(Color.parseColor("#1C2E45"))
             holder.arrowButton2.setColorFilter(Color.GRAY)
         }
 
         val adapter = MarksAdapter(ArrayList(tpl.second.filter { it.mark.length > 0 }), activity)
-        holder.marks.layoutManager = GridLayoutManager(activity, 2)
+        holder.marks.layoutManager = GridLayoutManager(activity, 1)
         holder.marks.adapter = adapter
     }
 

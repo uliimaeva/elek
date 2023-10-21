@@ -55,7 +55,7 @@ class JournalActivity : AppCompatActivity() {
 
     }
 
-    fun showToast(text: String) {
+    fun showToast(text: String) {67
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
