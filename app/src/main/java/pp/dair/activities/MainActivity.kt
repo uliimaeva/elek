@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.r_recycler)
 
-        adapter = ScheduleAdapter(ArrayList(), this)
+        adapter = ScheduleAdapter(ArrayList(), this, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
         loadSchedule()

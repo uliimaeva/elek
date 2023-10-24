@@ -3,24 +3,26 @@ package pp.dair.adapters
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
+import pp.dair.activities.ScheduleDialogFragment
 import pp.dair.models.LessonWithMark
 import pp.dair.retrofit.Common
 
+
 class ScheduleAdapter(
     private var scheduleArray: ArrayList<LessonWithMark>,
-    private var activity: Activity
+    private var activity: Activity,
+    private var context: Context
 ): RecyclerView.Adapter<ScheduleAdapter.MyViewHolder>() {
 
     private var listener: (() -> Unit)? = null
@@ -61,6 +63,11 @@ class ScheduleAdapter(
 
         holder.mainLayout.setOnClickListener(View.OnClickListener {
             Toast.makeText(activity, scheduleArray[position].subject, Toast.LENGTH_SHORT).show()
+
+            val scheduleDialogFragment = ScheduleDialogFragment()
+            val manager = (context as AppCompatActivity).supportFragmentManager;
+            scheduleDialogFragment.show(manager, "scheduleDialog")
+            Common.currentSub = scheduleArray[position]
             listener?.invoke()
         })
     }

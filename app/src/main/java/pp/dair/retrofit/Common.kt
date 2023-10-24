@@ -1,5 +1,6 @@
 package pp.dair.retrofit
 
+import pp.dair.models.LessonWithMark
 import pp.dair.models.StudentInfo
 
 object Common {
@@ -10,4 +11,5 @@ object Common {
     var sessionId: String? = null;
     var subgroupId: Int = 0;
     var studentInfo: StudentInfo? = null
+    var currentSub: LessonWithMark? = null
 }

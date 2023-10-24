@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="280dp"
+    android:orientation="vertical"
+    android:background="@drawable/visit_line_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Предмет: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/subName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="МДК 04.01 Внедрение и поддержка компьютерных систем"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Преподаватель: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/preName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Суворов Дмитрий Артемович"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Аудитория: "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/audName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="326"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/seeButton"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button"
+            android:text="Посмотреть заметки"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:text="Создать заметку"
+            android:textColor="@color/black"
+            android:background="@drawable/button"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
