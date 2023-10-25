@@ -3,6 +3,7 @@ package pp.dair.retrofit
 import okhttp3.ResponseBody
 import retrofit2.Call
 import pp.dair.models.*;
+import retrofit2.Response
 import retrofit2.http.*
 
 interface RetrofitService {
@@ -47,4 +48,15 @@ interface RetrofitService {
     fun getStudentInfo(
         @Header("Session") session: String
     ): Call<StudentInfo>
+
+    @GET("notes")
+    fun getNotes(
+        @Header("Session") session: String
+    ): Call<ArrayList<Note>>
+
+    @POST("notes")
+    fun createNote(@Header("Session") session: String, @Body data: Note): Call<Note>
+
+    @DELETE("notes/{note_id}")
+    fun deleteNote(@Header("Session") session: String, @Path("note_id") noteId: Int): Call<Response<Void>>
 }

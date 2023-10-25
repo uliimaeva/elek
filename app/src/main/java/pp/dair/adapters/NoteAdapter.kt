@@ -33,11 +33,11 @@ class NoteAdapter (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.heading.text = String.format("%s", noteArray[position].name)
-        holder.note.text = String.format("%s", noteArray[position].noteText)
+        holder.heading.text = String.format("%s", noteArray[position].title)
+        holder.note.text = String.format("%s", noteArray[position].text)
 
         holder.mainLayout.setOnClickListener(View.OnClickListener {
-            Toast.makeText(activity, noteArray[position].name, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, noteArray[position].title, Toast.LENGTH_SHORT).show()
             listener?.invoke()
         })
     }
