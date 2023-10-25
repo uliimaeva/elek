@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/visit_line_blue">
+
+    <TextView
+        android:id="@+id/noteName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Заметка № 123"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:paddingHorizontal="15dp"/>
+    <TextView
+        android:id="@+id/noteDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="25.10.2023"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_text"
+        android:paddingHorizontal="15dp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:src="@drawable/visit_line_blue"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/note_TIL"
+            style="@style/TextInputLayout"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/primary_dark"
+            app:boxStrokeErrorColor="@color/red"
+            app:hintTextColor="@color/primary_text"
+            app:counterEnabled="true"
+            app:counterMaxLength="500"
+            android:paddingBottom="10dp"
+            app:counterOverflowTextAppearance="@style/MyCounterText">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_TIET"
+                style="@style/TextInputEditText"
+                android:layout_width="280dp"
+                android:layout_height="300dp"
+                android:hint="Текст Заметки"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button"
+            android:text="Сохранить"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginStart="25dp" />
+
+        <TextView
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/delButton"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Удалить"
+            android:textColor="@color/black"
+            android:background="@drawable/button"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

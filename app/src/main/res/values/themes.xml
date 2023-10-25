@@ -13,6 +13,11 @@
     </style>
 
     <style name="TextInputEditText" parent="ThemeOverlay.MaterialComponents.TextInputEditText.FilledBox.Dense">
-        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:textColor">@color/primary_text</item>
     </style>
+
+    <style name="MyCounterText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
 </resources>

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import pp.dair.R
 import pp.dair.models.Note
@@ -38,6 +39,11 @@ class ScheduleDialogFragment : DialogFragment() {
             seeNote.setOnClickListener {
                 val intent = Intent(this.requireActivity(), NotesActivity::class.java)
                 startActivity(intent)
+            }
+            addNote.setOnClickListener{
+                val noteDialogFragment = NoteDialogFragment()
+                val manager = (context as AppCompatActivity).supportFragmentManager;
+                noteDialogFragment.show(manager, "noteDialog")
             }
 
 
