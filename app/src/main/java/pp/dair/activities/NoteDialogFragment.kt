@@ -2,8 +2,8 @@ package pp.dair.activities
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -12,7 +12,11 @@ import com.google.android.material.textfield.TextInputLayout
 import pp.dair.R
 import pp.dair.models.Note
 import pp.dair.retrofit.Common
-import kotlin.io.path.fileVisitor
+import pp.dair.viewmodels.NoteViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.Date
 
 class NoteDialogFragment : DialogFragment() {
 
@@ -36,8 +40,54 @@ class NoteDialogFragment : DialogFragment() {
             addNote = inflater.findViewById(R.id.addButton)
             delNote = inflater.findViewById(R.id.delButton)
 
+            noteData.text = Date().toString()
+
+            addNote.setOnClickListener{
+                noteAdd()
+            }
+            delNote.setOnClickListener{
+                noteDelete()
+            }
+
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    private fun noteDelete() {
+        val noteViewModel: NoteViewModel = NoteViewModel()
+        noteViewModel.deleteNote(
+            Common.currentNote!!.id!!
+        , callback = object : Callback<Response<Void>> {
+            override fun onResponse(call: Call<Response<Void>>, response: Response<Response<Void>>) {
+                if (response.isSuccessful) {
+                    Log.d("Created", "Cool!")
+                }
+            }
+
+            override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
+                Log.d("sad((", t.toString())
+            }
+        })
+    }
+
+    private fun noteAdd() {
+        val noteViewModel: NoteViewModel = NoteViewModel()
+        noteViewModel.createNote(Note(
+            null,
+            noteName.text.toString(),
+            Date(), //noteData.text,
+            noteEditText.text.toString()
+        ), callback = object : Callback<Note> {
+            override fun onResponse(call: Call<Note>, response: Response<Note>) {
+                if (response.isSuccessful) {
+                    Log.d("Created", "Cool!")
+                }
+            }
+
+            override fun onFailure(call: Call<Note>, t: Throwable) {
+                Log.d("sad((", t.toString())
+            }
+        })
     }
 }

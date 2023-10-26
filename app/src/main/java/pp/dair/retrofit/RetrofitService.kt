@@ -49,12 +49,12 @@ interface RetrofitService {
         @Header("Session") session: String
     ): Call<StudentInfo>
 
-    @GET("notes")
+    @GET("notes/")
     fun getNotes(
         @Header("Session") session: String
     ): Call<ArrayList<Note>>
 
-    @POST("notes")
+    @POST("notes/")
     fun createNote(@Header("Session") session: String, @Body data: Note): Call<Note>
 
     @DELETE("notes/{note_id}")
