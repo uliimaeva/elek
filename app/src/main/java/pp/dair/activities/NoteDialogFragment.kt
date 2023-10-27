@@ -2,11 +2,13 @@ package pp.dair.activities
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -17,6 +19,8 @@ import pp.dair.viewmodels.NoteViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class NoteDialogFragment : DialogFragment() {
@@ -24,10 +28,16 @@ class NoteDialogFragment : DialogFragment() {
     var noteId: Int? = null;
     lateinit var noteName: EditText
     lateinit var noteData: TextView
+    lateinit var noteSub: TextView
     lateinit var noteEditText: TextInputEditText
     lateinit var noteText: TextInputLayout
     lateinit var addNote: Button
     lateinit var delNote: Button
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
@@ -37,12 +47,15 @@ class NoteDialogFragment : DialogFragment() {
 
             noteName = inflater.findViewById(R.id.noteName)
             noteData = inflater.findViewById(R.id.noteDate)
+            noteSub = inflater.findViewById(R.id.noteSub)
             noteEditText = inflater.findViewById(R.id.note_TIET)
             noteText = inflater.findViewById(R.id.note_TIL)
             addNote = inflater.findViewById(R.id.addButton)
             delNote = inflater.findViewById(R.id.delButton)
 
-            noteData.text = Date().toString()
+            val formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy")
+            noteData.text = LocalDateTime.now().format(formatter)
+            noteSub.text = Common.currentSub!!.subject
 
             addNote.setOnClickListener{
                 noteAdd()

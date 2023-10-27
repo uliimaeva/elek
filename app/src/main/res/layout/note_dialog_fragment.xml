@@ -25,6 +25,15 @@
         android:textStyle="bold"
         android:textColor="@color/primary_text"
         android:paddingHorizontal="15dp"/>
+    <TextView
+        android:id="@+id/noteSub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="МДК 11.01 Технология разработки баз данных"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_text"
+        android:paddingHorizontal="15dp"/>
 
     <ImageView
         android:layout_width="match_parent"
