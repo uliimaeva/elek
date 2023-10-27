@@ -18,12 +18,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.withContext
 import pp.dair.R
 import pp.dair.activities.JournalActivity
+import pp.dair.models.JournalFinalMark
 import pp.dair.models.JournalMark
 import java.util.TreeMap
 import kotlin.math.roundToInt
 
 class JournalAdapter(
     private var marksMap: Map<String, ArrayList<JournalMark>>,
+    private var finalMarksArray: ArrayList<JournalFinalMark>,
     private val activity: Activity
 ): RecyclerView.Adapter<JournalAdapter.MyViewHolder>() {
     private var orderedMap: TreeMap<String, ArrayList<JournalMark>> = TreeMap(marksMap)
@@ -72,11 +74,17 @@ class JournalAdapter(
         holder.subject.text = tpl.first
         val avg = countAverage(tpl.second)
         if (!avg.isNaN()) {
-            holder.main_mark.text = avg.roundToInt().toString()
             holder.average.text = avg.toString().take(3)
         } else {
-            holder.main_mark.text = "-"
             holder.average.text = "-"
+        }
+        val filterRes = finalMarksArray.filter { it.subject == tpl.first }
+        holder.main_mark.text = "-"
+        if (filterRes.size > 0) {
+            val filteredMark = filterRes.get(0)
+            if (!filteredMark.mark.isNullOrEmpty()) {
+                holder.main_mark.text = filteredMark.mark
+            }
         }
 //        holder.marks.text = getRow(grouppedData[position].second)
 
@@ -107,6 +115,11 @@ class JournalAdapter(
     fun setArray(map: Map<String, ArrayList<JournalMark>>) {
         this.marksMap = map
         this.orderedMap = TreeMap(map)
+        notifyDataSetChanged()
+    }
+
+    fun setFinalArray(arr: ArrayList<JournalFinalMark>) {
+        this.finalMarksArray = arr
         notifyDataSetChanged()
     }
 }

@@ -9,7 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
+import pp.dair.models.JournalMark
 import pp.dair.models.Note
+import pp.dair.retrofit.Common
+import java.util.TreeMap
 
 class NoteAdapter (
     private var noteArray: ArrayList<Note>,
@@ -18,9 +21,6 @@ class NoteAdapter (
 
     private var listener: (() -> Unit)? = null
 
-    fun setLisnener(listener: (() -> Unit)){
-        this.listener = listener
-    }
     class MyViewHolder (item: View): RecyclerView.ViewHolder(item) {
         val heading: TextView = itemView.findViewById(R.id.noteName)
         val note: TextView = itemView.findViewById(R.id.noteText)
@@ -37,12 +37,17 @@ class NoteAdapter (
         holder.note.text = String.format("%s", noteArray[position].text)
 
         holder.mainLayout.setOnClickListener(View.OnClickListener {
-            Toast.makeText(activity, noteArray[position].title, Toast.LENGTH_SHORT).show()
+            Common.currentNote = noteArray[position]
             listener?.invoke()
         })
     }
 
     override fun getItemCount(): Int {
         return noteArray.size
+    }
+
+    fun setArray(arr: ArrayList<Note>) {
+        noteArray = arr
+        notifyDataSetChanged()
     }
 }

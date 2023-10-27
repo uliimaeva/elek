@@ -59,4 +59,7 @@ interface RetrofitService {
 
     @DELETE("notes/{note_id}")
     fun deleteNote(@Header("Session") session: String, @Path("note_id") noteId: Int): Call<Response<Void>>
+
+    @GET("marks/semester/final/")
+    fun getFinalMarks(@Header("Session") session: String, @Query("year") year: Int, @Query("semester") semester: Int): Call<ArrayList<JournalFinalMark>>
 }

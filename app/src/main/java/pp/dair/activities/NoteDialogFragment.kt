@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
@@ -20,7 +21,8 @@ import java.util.Date
 
 class NoteDialogFragment : DialogFragment() {
 
-    lateinit var noteName: TextView
+    var noteId: Int? = null;
+    lateinit var noteName: EditText
     lateinit var noteData: TextView
     lateinit var noteEditText: TextInputEditText
     lateinit var noteText: TextInputLayout
@@ -57,11 +59,12 @@ class NoteDialogFragment : DialogFragment() {
     private fun noteDelete() {
         val noteViewModel: NoteViewModel = NoteViewModel()
         noteViewModel.deleteNote(
-            Common.currentNote!!.id!!
+            noteId!!
         , callback = object : Callback<Response<Void>> {
             override fun onResponse(call: Call<Response<Void>>, response: Response<Response<Void>>) {
                 if (response.isSuccessful) {
-                    Log.d("Created", "Cool!")
+                    Log.d("Deleted", "Cool!")
+                    noteId = null;
                 }
             }
 
@@ -72,6 +75,7 @@ class NoteDialogFragment : DialogFragment() {
     }
 
     private fun noteAdd() {
+        if (noteId != null) { return }
         val noteViewModel: NoteViewModel = NoteViewModel()
         noteViewModel.createNote(Note(
             null,
@@ -82,6 +86,9 @@ class NoteDialogFragment : DialogFragment() {
             override fun onResponse(call: Call<Note>, response: Response<Note>) {
                 if (response.isSuccessful) {
                     Log.d("Created", "Cool!")
+                    if (noteId == null && response.body() != null) {
+                        noteId = response.body()!!.id!!
+                    }
                 }
             }
 
