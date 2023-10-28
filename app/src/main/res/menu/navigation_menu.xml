@@ -8,7 +8,11 @@
     <item
         android:id="@+id/p_diplom"
         android:icon="@drawable/ic_journal"
-        android:title="Посмотреть дипломные оценки" />
+        android:title="Дипломные оценки" />
+    <item
+        android:id="@+id/p_Note"
+        android:icon="@drawable/ic_calendaar"
+        android:title="Заметки"/>
     <item
         android:id="@+id/p_ExitProfile"
         android:icon="@drawable/round_logout_24"

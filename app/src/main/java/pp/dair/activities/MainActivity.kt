@@ -235,6 +235,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, DiplomActivity::class.java))
                 }
 
+                R.id.p_Note -> {
+                    startActivity(Intent(this, NotesActivity::class.java))
+                }
+
                 R.id.p_ExitProfile -> {
                     startActivity(Intent(this, AuthActivity::class.java))
                 }

@@ -6,5 +6,6 @@ data class Note(
     val id: Int?,
     val title: String,
     val date: Date,
+    val subject: String,
     val text: String
 )

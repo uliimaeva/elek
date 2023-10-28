@@ -62,7 +62,6 @@ class ScheduleAdapter(
         }
 
         holder.mainLayout.setOnClickListener(View.OnClickListener {
-            Toast.makeText(activity, scheduleArray[position].subject, Toast.LENGTH_SHORT).show()
 
             val scheduleDialogFragment = ScheduleDialogFragment()
             val manager = (context as AppCompatActivity).supportFragmentManager;

@@ -2,12 +2,14 @@ package pp.dair.activities
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
@@ -59,15 +61,20 @@ class NoteDialogFragment : DialogFragment() {
 
             addNote.setOnClickListener{
                 noteAdd()
+                dialog?.cancel()
+                Toast.makeText(activity, "Заметка успешно создалась!", Toast.LENGTH_SHORT).show()
             }
             delNote.setOnClickListener{
                 noteDelete()
+                dialog?.cancel()
+                Toast.makeText(activity, "Заметка успешно удалилась!", Toast.LENGTH_SHORT).show()
             }
 
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
 
     private fun noteDelete() {
         val noteViewModel: NoteViewModel = NoteViewModel()
@@ -94,6 +101,7 @@ class NoteDialogFragment : DialogFragment() {
             null,
             noteName.text.toString(),
             Date(), //noteData.text,
+            noteSub.text.toString(),
             noteEditText.text.toString()
         ), callback = object : Callback<Note> {
             override fun onResponse(call: Call<Note>, response: Response<Note>) {
