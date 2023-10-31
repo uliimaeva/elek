@@ -2,7 +2,6 @@ package pp.dair.activities
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,17 +15,18 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import pp.dair.R
 import pp.dair.models.Note
+import pp.dair.models.NotePatch
 import pp.dair.retrofit.Common
 import pp.dair.viewmodels.NoteViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
-class NoteDialogFragment : DialogFragment() {
+class NoteNDialogFragment : DialogFragment() {
 
+    var onCloseHook: (() -> Unit)? = null
     var noteId: Int? = null;
     lateinit var noteName: EditText
     lateinit var noteData: TextView
@@ -35,9 +35,6 @@ class NoteDialogFragment : DialogFragment() {
     lateinit var noteText: TextInputLayout
     lateinit var addNote: Button
     lateinit var delNote: Button
-
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -56,17 +53,23 @@ class NoteDialogFragment : DialogFragment() {
             delNote = inflater.findViewById(R.id.delButton)
 
             val formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy")
-            noteData.text = LocalDateTime.now().format(formatter)
-            noteSub.text = Common.currentSub!!.subject
+            val date = Common.currentNote!!.date
+            noteName.setText(Common.currentNote!!.title, TextView.BufferType.EDITABLE)
+            noteData.text = String.format("%02d.%02d.%d", date.date, date.month + 1, date.year - 100)
+            noteSub.text = Common.currentNote!!.subject
+            noteText.editText!!.setText(Common.currentNote!!.text, TextView.BufferType.EDITABLE)
+            noteId = Common.currentNote!!.id
 
             addNote.setOnClickListener{
-                noteAdd()
+                noteEdit()
                 dialog?.cancel()
-                Toast.makeText(activity, "Заметка успешно создалась!", Toast.LENGTH_SHORT).show()
+                onCloseHook?.invoke()
+                Toast.makeText(activity, "Заметка успешно отредактировалась!", Toast.LENGTH_SHORT).show()
             }
             delNote.setOnClickListener{
                 noteDelete()
                 dialog?.cancel()
+                onCloseHook?.invoke()
                 Toast.makeText(activity, "Заметка успешно удалилась!", Toast.LENGTH_SHORT).show()
             }
 
@@ -94,28 +97,19 @@ class NoteDialogFragment : DialogFragment() {
         })
     }
 
-    private fun noteAdd() {
-        if (noteId != null) { return }
+    private fun noteEdit() {
         val noteViewModel: NoteViewModel = NoteViewModel()
-        noteViewModel.createNote(Note(
-            null,
-            noteName.text.toString(),
-            Date(), //noteData.text,
-            noteSub.text.toString(),
-            noteEditText.text.toString()
-        ), callback = object : Callback<Note> {
+        noteViewModel.patchNote(noteId!!, NotePatch(noteEditText.text.toString(), noteName.text.toString()), callback = object : Callback<Note> {
             override fun onResponse(call: Call<Note>, response: Response<Note>) {
                 if (response.isSuccessful) {
-                    Log.d("Created", "Cool!")
-                    if (noteId == null && response.body() != null) {
-                        noteId = response.body()!!.id!!
-                    }
+                    Log.d("Patched", "Cool!")
                 }
             }
 
             override fun onFailure(call: Call<Note>, t: Throwable) {
                 Log.d("sad((", t.toString())
             }
+
         })
     }
 }

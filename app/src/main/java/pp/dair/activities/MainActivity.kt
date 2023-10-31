@@ -2,9 +2,11 @@ package pp.dair.activities
 
 import android.annotation.SuppressLint
 import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.DatePicker
 import android.widget.ImageButton
@@ -15,6 +17,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +26,7 @@ import com.google.android.material.navigation.NavigationView
 import pp.dair.R
 import pp.dair.adapters.ScheduleAdapter
 import pp.dair.models.LessonWithMark
+import pp.dair.retrofit.Common
 import pp.dair.viewmodels.MarksViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    @SuppressLint("ResourceType")
     fun setData() {
         val today = Calendar.getInstance()
         datePicker.init(
@@ -84,13 +89,21 @@ class MainActivity : AppCompatActivity() {
             this.month = datePicker.month + 1
 
         }
+
+//        val layout: View? = findViewById(R.layout.header_layout)
+//        val name: TextView = layout!!.findViewById(R.id.profile_name)
+//        val group: TextView = layout!!.findViewById(R.id.profile_group)
+//        name.text = Common.studentInfo!!.name
+//        group.text = Common.studentInfo!!.group.toString()
+
+
     }
 
     fun loadSchedule() {
         viewModel.getDaySchedule(year, month, day, object : Callback<ArrayList<LessonWithMark>> {
             override fun onResponse(
                 call: Call<ArrayList<LessonWithMark>>,
-                response: Response<ArrayList<LessonWithMark>>
+                response: Response<ArrayList<LessonWithMark>>,
             ) {
                 if (response.isSuccessful) {
                     Log.d("HUI", "Расписание получено!")
@@ -124,7 +137,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("MissingPermission")
     fun showToast(text: String) {
         val builder: NotificationCompat.Builder = NotificationCompat.Builder(this)
             .setSmallIcon(R.mipmap.ic_launcher)
@@ -142,7 +154,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, JournalActivity::class.java))
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

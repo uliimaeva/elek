@@ -30,7 +30,8 @@ class NotesActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.noteRecycler)
 
-        adapter = NoteAdapter(ArrayList(), this)
+        adapter = NoteAdapter(ArrayList(), this, this)
+        adapter.listener = { loadNotes() }
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.adapter = adapter
         loadNotes()

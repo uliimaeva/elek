@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import pp.dair.R
-import pp.dair.models.Note
 import pp.dair.retrofit.Common
-import kotlin.io.path.fileVisitor
 
 class ScheduleDialogFragment : DialogFragment() {
 
@@ -41,9 +39,9 @@ class ScheduleDialogFragment : DialogFragment() {
                 startActivity(intent)
             }
             addNote.setOnClickListener{
-                val noteDialogFragment = NoteDialogFragment()
+                val noteSDialogFragment = NoteSDialogFragment()
                 val manager = (context as AppCompatActivity).supportFragmentManager;
-                noteDialogFragment.show(manager, "noteDialog")
+                noteSDialogFragment.show(manager, "noteDialog")
             }
 
 

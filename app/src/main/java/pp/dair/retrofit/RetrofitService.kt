@@ -62,4 +62,7 @@ interface RetrofitService {
 
     @GET("marks/semester/final/")
     fun getFinalMarks(@Header("Session") session: String, @Query("year") year: Int, @Query("semester") semester: Int): Call<ArrayList<JournalFinalMark>>
+
+    @PATCH("notes/{note_id}")
+    fun patchNote(@Header("Session") session: String, @Path("note_id") noteId: Int, @Body data: NotePatch): Call<Note>
 }

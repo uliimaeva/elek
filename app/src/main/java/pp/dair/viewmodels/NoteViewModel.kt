@@ -1,6 +1,7 @@
 package pp.dair.viewmodels
 
 import pp.dair.models.Note
+import pp.dair.models.NotePatch
 import pp.dair.retrofit.Common
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,5 +17,9 @@ class NoteViewModel {
 
     fun deleteNote(noteId: Int, callback: Callback<Response<Void>>) {
         Common.retrofitService.deleteNote(Common.sessionId!!, noteId).enqueue(callback)
+    }
+
+    fun patchNote(noteId: Int, data: NotePatch, callback: Callback<Note>) {
+        Common.retrofitService.patchNote(Common.sessionId!!, noteId, data).enqueue(callback)
     }
 }
