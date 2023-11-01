@@ -22,4 +22,8 @@ class NoteViewModel {
     fun patchNote(noteId: Int, data: NotePatch, callback: Callback<Note>) {
         Common.retrofitService.patchNote(Common.sessionId!!, noteId, data).enqueue(callback)
     }
+
+    fun getSegmentedNotes(callback: Callback<Map<String, ArrayList<Note>>>) {
+        Common.retrofitService.getSegmentedNotes(Common.sessionId!!).enqueue(callback)
+    }
 }

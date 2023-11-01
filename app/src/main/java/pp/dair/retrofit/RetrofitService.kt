@@ -65,4 +65,7 @@ interface RetrofitService {
 
     @PATCH("notes/{note_id}")
     fun patchNote(@Header("Session") session: String, @Path("note_id") noteId: Int, @Body data: NotePatch): Call<Note>
+
+    @GET("notes/segmented/")
+    fun getSegmentedNotes(@Header("Session") session: String): Call<Map<String, ArrayList<Note>>>
 }

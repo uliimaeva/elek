@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
+import pp.dair.adapters.MainNoteAdapter
 import pp.dair.adapters.NoteAdapter
 import pp.dair.adapters.ScheduleAdapter
 import pp.dair.models.LessonWithMark
@@ -22,7 +23,7 @@ class NotesActivity : AppCompatActivity() {
 
     private var viewModel: NoteViewModel = NoteViewModel()
     private lateinit var recyclerView: RecyclerView
-    lateinit var adapter: NoteAdapter
+    lateinit var adapter: MainNoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,29 +31,30 @@ class NotesActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.noteRecycler)
 
-        adapter = NoteAdapter(ArrayList(), this, this)
+        adapter = MainNoteAdapter(emptyMap(), this, this)
         adapter.listener = { loadNotes() }
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = GridLayoutManager(this, 1)
         recyclerView.adapter = adapter
+
         loadNotes()
     }
 
     fun loadNotes() {
-        viewModel.getNotes(object: Callback<ArrayList<Note>> {
+        Log.d("NOTES", "Loading notes!")
+        viewModel.getSegmentedNotes(object: Callback<Map<String, ArrayList<Note>>> {
             override fun onResponse(
-                call: Call<ArrayList<Note>>,
-                response: Response<ArrayList<Note>>
+                call: Call<Map<String, ArrayList<Note>>>,
+                response: Response<Map<String, ArrayList<Note>>>
             ) {
                 if (response.isSuccessful) {
                     adapter.setArray(response.body()!!)
                 } else {
                     Log.d("ERR", "Шоколадки 2")
-                    adapter.setArray(ArrayList())
+                    adapter.setArray(emptyMap())
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<Note>>, t: Throwable) {
-                adapter.setArray(ArrayList())
+            override fun onFailure(call: Call<Map<String, ArrayList<Note>>>, t: Throwable) {
                 Log.d("ERR", t.toString())
             }
         })

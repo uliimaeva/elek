@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="200dp"
-    android:background="@drawable/button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:id="@+id/mainLayout">
-
+    
     <TextView
-        android:id="@+id/noteName"
+        android:id="@+id/sub_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Заголовок 1"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textAlignment="center"/>
-    <TextView
-        android:id="@+id/noteText"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:text="Какой-то тест заметки, просто надо что-то написать чтобы проверить как оно вообще будет работать"
-        android:layout_below="@id/noteName"
-        android:textSize="20sp"
-        android:layout_margin="15dp"/>
+        android:text="МДК 11.01. Разработка Баз данных"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"/>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/note_recycler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sub_name"/>
 </RelativeLayout>
