@@ -41,7 +41,7 @@ class MarksAdapter(
         val date = marksArray[position].date
 
         val formatter = DateTimeFormatter.ofPattern("dd.mm.yy")
-        val d = String.format("02%d.%02d.%d", date.date, date.month + 1, date.year - 100)
+        val d = String.format("%02d.%02d.%d", date.date, date.month + 1, date.year - 100)
         holder.date.text = d
     }
 
