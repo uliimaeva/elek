@@ -68,4 +68,10 @@ interface RetrofitService {
 
     @GET("notes/segmented/")
     fun getSegmentedNotes(@Header("Session") session: String): Call<Map<String, ArrayList<Note>>>
+
+    @GET("staff/teachers")
+    fun getTeachers(): Call<ArrayList<Staff>>
+
+    @GET("staff/schedule/{staff_id}/{year}/{month}/{day}")
+    fun getTeacherSchedule(@Path("staff_id") staffId: Int, @Path("year") year: Int, @Path("month") month: Int, @Path("day") day: Int): Call<ArrayList<LessonWithGroup>>
 }
