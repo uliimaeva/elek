@@ -243,8 +243,8 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, JournalActivity::class.java))
                 }
 
-                R.id.p_diplom -> {
-                    startActivity(Intent(this, DiplomActivity::class.java))
+                R.id.p_teacher -> {
+                    startActivity(Intent(this, TeacherSchedule::class.java))
                 }
 
                 R.id.p_Note -> {

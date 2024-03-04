@@ -6,9 +6,9 @@
         android:icon="@drawable/ic_journal"
         android:title="Журнал" />
     <item
-        android:id="@+id/p_diplom"
+        android:id="@+id/p_teacher"
         android:icon="@drawable/ic_journal"
-        android:title="Дипломные оценки" />
+        android:title="Расписание преподавателя" />
     <item
         android:id="@+id/p_Note"
         android:icon="@drawable/ic_calendaar"

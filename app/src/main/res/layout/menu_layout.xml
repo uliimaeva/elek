@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_TIL"
+        style="@style/TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:boxStrokeColor="@color/primary_dark"
+        app:boxStrokeErrorColor="@color/red"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@drawable/ic_error"
+        app:errorTextColor="@color/primary_text"
+        app:hintTextColor="@color/primary_text">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_TIET"
+            style="@style/TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите преподавателя..."/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <ListView
+        android:id="@+id/listTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:layout_below="@id/search_TIL"/>
+</RelativeLayout>
