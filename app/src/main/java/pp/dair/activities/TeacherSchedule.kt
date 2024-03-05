@@ -7,8 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.ImageButton
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -20,6 +23,9 @@ import pp.dair.adapters.ScheduleAdapter
 import pp.dair.adapters.ScheduleTeacherAdapter
 import pp.dair.models.LessonWithGroup
 import pp.dair.models.LessonWithMark
+import pp.dair.models.Staff
+import pp.dair.models.getStaffName
+import pp.dair.retrofit.Common
 import pp.dair.viewmodels.StaffViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,6 +45,8 @@ class TeacherSchedule : AppCompatActivity() {
     private lateinit var datePicker: DatePicker
     private lateinit var calendarButton: ImageButton
     private lateinit var checkButton: ImageButton
+    private var teachers: ArrayList<String> = arrayListOf()
+    private var teachersStaff: ArrayList<Staff> = arrayListOf()
 
     var id = 0
     var day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -125,18 +133,60 @@ class TeacherSchedule : AppCompatActivity() {
 
     }
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_schedule)
 
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
+        val hView = navigationView.getHeaderView(0)
         recyclerView = findViewById(R.id.t_sheadule)
         header = findViewById(R.id.r_date)
         left_button = findViewById(R.id.left)
         right_button = findViewById(R.id.right)
         calendarButton = findViewById(R.id.calendar)
         checkButton = findViewById(R.id.check)
+
+        var listView: ListView = hView.findViewById(R.id.listTeacher)
+        listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
+
+        listView.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                val selectedTeacherName = teachers.get(position)
+                for (teacher in teachersStaff) {
+                    if (getStaffName(teacher) == selectedTeacherName) {
+                        Common.selectedTeacher = teacher.id
+                    }
+                }
+                if (Common.selectedTeacher == null) {
+                    // ошибка что учитель не найден
+                } else {
+                    // чо-нить открываем делаем
+                }
+            }
+        }
+
+        StaffViewModel().getTeachers(object : Callback<ArrayList<Staff>> {
+            override fun onResponse(
+                call: Call<ArrayList<Staff>>,
+                response: Response<ArrayList<Staff>>,
+            ) {
+                if (response.isSuccessful) {
+                    teachersStaff = response.body()!!
+                    teachers.clear()
+                    teachers.addAll(ArrayList(response.body()!!.map { getStaffName(it) }))
+                    Log.d("SUCCESS", teachers.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<Staff>>, t: Throwable) {
+                Log.d("ERROR", "pipec")
+            }
+        })
 
         adapter = ScheduleTeacherAdapter(ArrayList(), this, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
