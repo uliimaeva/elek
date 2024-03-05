@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/p_Search"
+        android:icon="@drawable/ic_search"
+        android:title="Готово"/>
+
+    <item
+        android:id="@+id/p_Back"
+        android:icon="@drawable/round_logout_24"
+        android:title="Вернуться на главную" />
     <item
         android:id="@+id/p_Exit"
         android:icon="@drawable/round_logout_24"
