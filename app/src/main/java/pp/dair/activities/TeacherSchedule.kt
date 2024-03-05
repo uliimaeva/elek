@@ -35,7 +35,7 @@ class TeacherSchedule : AppCompatActivity() {
     lateinit var header: TextView
     private lateinit var left_button: ImageButton
     private lateinit var  right_button: ImageButton
-    private lateinit var journalButton: ImageButton
+    //private lateinit var journalButton: ImageButton
     private lateinit var datePicker: DatePicker
     private lateinit var calendarButton: ImageButton
     private lateinit var checkButton: ImageButton
@@ -132,6 +132,11 @@ class TeacherSchedule : AppCompatActivity() {
 
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
         recyclerView = findViewById(R.id.t_sheadule)
+        header = findViewById(R.id.r_date)
+        left_button = findViewById(R.id.left)
+        right_button = findViewById(R.id.right)
+        calendarButton = findViewById(R.id.calendar)
+        checkButton = findViewById(R.id.check)
 
         adapter = ScheduleTeacherAdapter(ArrayList(), this, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
