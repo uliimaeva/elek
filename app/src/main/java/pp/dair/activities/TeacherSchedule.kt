@@ -1,6 +1,5 @@
 package pp.dair.activities
 
-import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,15 +13,16 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import pp.dair.R
-import pp.dair.adapters.ScheduleAdapter
 import pp.dair.adapters.ScheduleTeacherAdapter
 import pp.dair.models.LessonWithGroup
-import pp.dair.models.LessonWithMark
 import pp.dair.models.Staff
 import pp.dair.models.getStaffName
 import pp.dair.retrofit.Common
@@ -47,9 +47,11 @@ class TeacherSchedule : AppCompatActivity() {
     private lateinit var calendarButton: ImageButton
     private lateinit var checkButton: ImageButton
     private lateinit var listView: ListView
+    private lateinit var search_TIL: SearchView
+    private lateinit var search_TIET: TextInputEditText
     private var teachers: ArrayList<String> = arrayListOf()
     private var teachersStaff: ArrayList<Staff> = arrayListOf()
-    private var teacherArry: ArrayList<LessonWithGroup> = ArrayList()
+    private var teacherArray: ArrayList<LessonWithGroup> = ArrayList()
 
     var day = calendar.get(Calendar.DAY_OF_MONTH)
     var year = calendar.get(Calendar.YEAR)
@@ -131,6 +133,22 @@ class TeacherSchedule : AppCompatActivity() {
         })
     }
 
+    fun filterList(text: String) {
+        teachers.clear()
+        for (item in teachersStaff) {
+            val fio = getStaffName(item)
+            Log.d("SEARCH", String.format("Comparing %s and %s", fio, text))
+            if (fio.contains(text, ignoreCase = true)) {
+                Log.d("SEARCH", String.format("Matched %s", fio));
+                teachers.add(getStaffName(item))
+            }
+        }
+        if (teachers.isEmpty()) {
+            Toast.makeText(this, "Такого преподавателя нет", Toast.LENGTH_SHORT).show()
+        }
+        listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,6 +164,8 @@ class TeacherSchedule : AppCompatActivity() {
         checkButton = findViewById(R.id.check)
         datePicker = findViewById(R.id.datePicker1)
         fioTeacher = findViewById(R.id.fioTeacher)
+        search_TIL = hView.findViewById(R.id.search_TIL)
+//        search_TIET = hView.findViewById(R.id.search_TIET)
 
         listView = hView.findViewById(R.id.listTeacher)
         listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
@@ -183,7 +203,6 @@ class TeacherSchedule : AppCompatActivity() {
                     teachers.addAll(ArrayList(response.body()!!.map { getStaffName(it) }))
                     (listView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
                     Log.d("SUCCESS", teachers.toString())
-                    updateAdapterList()
                 }
             }
 
@@ -263,27 +282,18 @@ class TeacherSchedule : AppCompatActivity() {
             true
         }
         navigationView.setNavigationItemSelectedListener(navListener)
-    }
 
 
-    fun updateAdapterList() {
-        //adapter.setFilteredList(teacherArry)
-//        showFrameListener!!.invoke()
-    }
-
-    fun filterList(text: String) {
-        var filteredTeacher: ArrayList<LessonWithGroup> = ArrayList()
-        for (item in teacherArry) {
-            Log.d("SEARCH", String.format("Comparing %s and %s", item.teacher, text))
-            if (item.teacher.contains(text, ignoreCase = true)) {
-                Log.d("SEARCH", String.format("Matched %s", item.teacher));
-                filteredTeacher.add(item)
+        search_TIL.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
             }
-        }
-        if (filteredTeacher.isEmpty()) {
-            Toast.makeText(this, "Такого преподавателя нет", Toast.LENGTH_SHORT).show()
-        }
-         //listView.adapter.setFilteredList(filteredTeacher)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    filterList(newText)
+                }
+                return false
+            }
+        })
     }
-
 }
