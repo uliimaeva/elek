@@ -41,14 +41,16 @@ class TeacherSchedule : AppCompatActivity() {
     lateinit var header: TextView
     private lateinit var left_button: ImageButton
     private lateinit var  right_button: ImageButton
+    private lateinit var fioTeacher: TextView
     //private lateinit var journalButton: ImageButton
     private lateinit var datePicker: DatePicker
     private lateinit var calendarButton: ImageButton
     private lateinit var checkButton: ImageButton
+    private lateinit var listView: ListView
     private var teachers: ArrayList<String> = arrayListOf()
     private var teachersStaff: ArrayList<Staff> = arrayListOf()
+    private var teacherArry: ArrayList<LessonWithGroup> = ArrayList()
 
-    var id = 0
     var day = calendar.get(Calendar.DAY_OF_MONTH)
     var year = calendar.get(Calendar.YEAR)
     var month = calendar.get(Calendar.MONTH) + 1
@@ -86,7 +88,6 @@ class TeacherSchedule : AppCompatActivity() {
         datePicker.init(
             today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)
-
         ) { _, year, month, day ->
             val month = month + 1
             calendar.set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
@@ -100,11 +101,10 @@ class TeacherSchedule : AppCompatActivity() {
             this.day = datePicker.dayOfMonth
             this.year = datePicker.year
             this.month = datePicker.month + 1
-
         }
     }
 
-    fun loadSchedule() {
+    fun loadSchedule(id: Int) {
         viewModel.getTeacherSchedule(id, year, month, day, object : Callback<ArrayList<LessonWithGroup>> {
             override fun onResponse(
                 call: Call<ArrayList<LessonWithGroup>>,
@@ -116,6 +116,8 @@ class TeacherSchedule : AppCompatActivity() {
                         Log.d("HUI", lesson.toString())
                     }
                     adapter.setArray(response.body()!!)
+                    fioTeacher.visibility = View.VISIBLE
+//                    fioTeacher.text
                 } else {
                     showToast("Технические шоколадки 2")
                     adapter.setArray(ArrayList())
@@ -129,9 +131,6 @@ class TeacherSchedule : AppCompatActivity() {
         })
     }
 
-    fun setMenuData(){
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,8 +144,10 @@ class TeacherSchedule : AppCompatActivity() {
         right_button = findViewById(R.id.right)
         calendarButton = findViewById(R.id.calendar)
         checkButton = findViewById(R.id.check)
+        datePicker = findViewById(R.id.datePicker1)
+        fioTeacher = findViewById(R.id.fioTeacher)
 
-        var listView: ListView = hView.findViewById(R.id.listTeacher)
+        listView = hView.findViewById(R.id.listTeacher)
         listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
 
         listView.onItemClickListener = object : AdapterView.OnItemClickListener {
@@ -160,6 +161,7 @@ class TeacherSchedule : AppCompatActivity() {
                 for (teacher in teachersStaff) {
                     if (getStaffName(teacher) == selectedTeacherName) {
                         Common.selectedTeacher = teacher.id
+                        Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
                     }
                 }
                 if (Common.selectedTeacher == null) {
@@ -179,7 +181,9 @@ class TeacherSchedule : AppCompatActivity() {
                     teachersStaff = response.body()!!
                     teachers.clear()
                     teachers.addAll(ArrayList(response.body()!!.map { getStaffName(it) }))
+                    (listView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
                     Log.d("SUCCESS", teachers.toString())
+                    updateAdapterList()
                 }
             }
 
@@ -212,7 +216,7 @@ class TeacherSchedule : AppCompatActivity() {
                 year,
                 numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK))
             )
-            loadSchedule()
+            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
         }
         right_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
@@ -227,7 +231,7 @@ class TeacherSchedule : AppCompatActivity() {
                 numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK))
             )
 
-            loadSchedule()
+            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
         }
 
         calendarButton.setOnClickListener {
@@ -240,14 +244,14 @@ class TeacherSchedule : AppCompatActivity() {
             datePicker.visibility = View.GONE
             checkButton.visibility = View.GONE
             calendarButton.visibility = View.VISIBLE
-            loadSchedule()
+            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
         }
 
         val navListener = NavigationView.OnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
                 R.id.p_Back -> {
-                    startActivity(Intent(this, JournalActivity::class.java))
+                    startActivity(Intent(this, MainActivity::class.java))
                 }
                 R.id.p_Exit -> {
                     val manager = supportFragmentManager
@@ -259,6 +263,27 @@ class TeacherSchedule : AppCompatActivity() {
             true
         }
         navigationView.setNavigationItemSelectedListener(navListener)
+    }
+
+
+    fun updateAdapterList() {
+        //adapter.setFilteredList(teacherArry)
+//        showFrameListener!!.invoke()
+    }
+
+    fun filterList(text: String) {
+        var filteredTeacher: ArrayList<LessonWithGroup> = ArrayList()
+        for (item in teacherArry) {
+            Log.d("SEARCH", String.format("Comparing %s and %s", item.teacher, text))
+            if (item.teacher.contains(text, ignoreCase = true)) {
+                Log.d("SEARCH", String.format("Matched %s", item.teacher));
+                filteredTeacher.add(item)
+            }
+        }
+        if (filteredTeacher.isEmpty()) {
+            Toast.makeText(this, "Такого преподавателя нет", Toast.LENGTH_SHORT).show()
+        }
+         //listView.adapter.setFilteredList(filteredTeacher)
     }
 
 }

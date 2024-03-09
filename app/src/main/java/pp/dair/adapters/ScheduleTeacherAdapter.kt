@@ -17,6 +17,7 @@ import pp.dair.R
 import pp.dair.activities.ScheduleDialogFragment
 import pp.dair.models.LessonWithGroup
 import pp.dair.models.LessonWithMark
+import pp.dair.models.Staff
 import pp.dair.retrofit.Common
 
 
