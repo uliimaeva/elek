@@ -18,9 +18,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.content.Intent
+import pp.dair.models.LessonWithGroup
 import pp.dair.models.LoginPayload
+import pp.dair.models.Staff
 import pp.dair.models.StudentInfo
 import pp.dair.retrofit.Common
+import pp.dair.viewmodels.StaffViewModel
 
 class AuthActivity : AppCompatActivity() {
     var viewModel : SessionViewModel = SessionViewModel()
@@ -38,20 +41,24 @@ class AuthActivity : AppCompatActivity() {
     }
 
     fun goToMain() {
-        viewModel.getInfoCallback(object: Callback<StudentInfo> {
-            override fun onResponse(call: Call<StudentInfo>, response: Response<StudentInfo>) {
-                if (response.isSuccessful) {
-                    Common.studentInfo = response.body()
-                    Log.d("STUDENT-INFO", response.body().toString())
+        if (!Common.isTeacher) {
+            viewModel.getInfoCallback(object : Callback<StudentInfo> {
+                override fun onResponse(call: Call<StudentInfo>, response: Response<StudentInfo>) {
+                    if (response.isSuccessful) {
+                        Common.studentInfo = response.body()
+                        Log.d("STUDENT-INFO", response.body().toString())
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<StudentInfo>, t: Throwable) {
-                Log.d("STUDENT-INFO", t.toString())
-            }
-        })
-        Thread.sleep(500)
-        startActivity(Intent(this, MainActivity::class.java))
+                override fun onFailure(call: Call<StudentInfo>, t: Throwable) {
+                    Log.d("STUDENT-INFO", t.toString())
+                }
+            })
+            Thread.sleep(100)
+            startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            showToast("бро ты препод...")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,6 +137,7 @@ class AuthActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         showToast(response.body()!!.message)
+                        Common.isTeacher = response.body()!!.is_teacher
                         if (response.body()!!.success == 1) {
                             if (login == "mastervan" || login == "gxJ92") {
                                 Common.subgroupId = 1

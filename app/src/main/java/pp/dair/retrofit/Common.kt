@@ -11,6 +11,7 @@ object Common {
 
     var sessionId: String? = null;
     var subgroupId: Int = 0;
+    var isTeacher: Boolean = false;
     var studentInfo: StudentInfo? = null
     var currentSub: LessonWithMark? = null
     var currentNote: Note? = null
