@@ -58,6 +58,7 @@ class AuthActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         } else {
             showToast("бро ты препод...")
+            startActivity(Intent(this, MainTeacherActivity::class.java))
         }
     }
 
