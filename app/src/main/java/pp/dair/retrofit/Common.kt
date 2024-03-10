@@ -16,4 +16,5 @@ object Common {
     var currentSub: LessonWithMark? = null
     var currentNote: Note? = null
     var selectedTeacher: Int? = null
+    var loggedInTeacher: Int? = null
 }

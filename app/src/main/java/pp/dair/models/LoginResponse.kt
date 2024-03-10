@@ -5,5 +5,5 @@ data class LoginResponse(
     val message: String,
     val tip: String,
     val success: Int,
-    val is_teacher: Boolean
+    val teacher_id: Int?
 )

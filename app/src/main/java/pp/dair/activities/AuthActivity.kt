@@ -57,7 +57,6 @@ class AuthActivity : AppCompatActivity() {
             Thread.sleep(100)
             startActivity(Intent(this, MainActivity::class.java))
         } else {
-            showToast("бро ты препод...")
             startActivity(Intent(this, MainTeacherActivity::class.java))
         }
     }
@@ -138,7 +137,8 @@ class AuthActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         showToast(response.body()!!.message)
-                        Common.isTeacher = response.body()!!.is_teacher
+                        Common.isTeacher = response.body()!!.teacher_id != null
+                        Common.loggedInTeacher = response.body()!!.teacher_id
                         if (response.body()!!.success == 1) {
                             if (login == "mastervan" || login == "gxJ92") {
                                 Common.subgroupId = 1

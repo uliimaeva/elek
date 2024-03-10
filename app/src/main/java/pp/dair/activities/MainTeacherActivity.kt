@@ -41,14 +41,10 @@ class MainTeacherActivity : AppCompatActivity() {
     lateinit var header: TextView
     private lateinit var left_button: ImageButton
     private lateinit var  right_button: ImageButton
-    private lateinit var fioTeacher: TextView
+    //private lateinit var fioTeacher: TextView
     private lateinit var datePicker: DatePicker
     private lateinit var calendarButton: ImageButton
     private lateinit var checkButton: ImageButton
-    private lateinit var listView: ListView
-    private var teachers: ArrayList<String> = arrayListOf()
-    private var teachersStaff: ArrayList<Staff> = arrayListOf()
-    private var teacherArray: ArrayList<LessonWithGroup> = ArrayList()
 
     var day = calendar.get(Calendar.DAY_OF_MONTH)
     var year = calendar.get(Calendar.YEAR)
@@ -115,7 +111,7 @@ class MainTeacherActivity : AppCompatActivity() {
                         Log.d("HUI", lesson.toString())
                     }
                     adapter.setArray(response.body()!!)
-                    fioTeacher.visibility = View.VISIBLE
+                    //fioTeacher.visibility = View.VISIBLE
 //                    fioTeacher.text
                 } else {
                     showToast("Технические шоколадки 2")
@@ -142,28 +138,7 @@ class MainTeacherActivity : AppCompatActivity() {
         calendarButton = findViewById(R.id.calendar)
         checkButton = findViewById(R.id.check)
         datePicker = findViewById(R.id.datePicker1)
-
-
-        StaffViewModel().getTeachers(object : Callback<ArrayList<Staff>> {
-            override fun onResponse(
-                call: Call<ArrayList<Staff>>,
-                response: Response<ArrayList<Staff>>,
-            ) {
-                if (response.isSuccessful) {
-                    teachersStaff = response.body()!!
-                    teachers.clear()
-                    teachers.addAll(ArrayList(response.body()!!.map { getStaffName(it) }))
-                    (listView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
-                    Log.d("SUCCESS", teachers.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<ArrayList<Staff>>, t: Throwable) {
-                Log.d("ERROR", "pipec")
-            }
-        })
-
-        adapter = ScheduleTeacherAdapter(ArrayList(), this, this)
+        adapter = ScheduleTeacherAdapter(arrayListOf(), this, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
 
@@ -187,7 +162,7 @@ class MainTeacherActivity : AppCompatActivity() {
                 year,
                 numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK))
             )
-            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+            Common.loggedInTeacher?.let { it1 -> loadSchedule(it1) }
         }
         right_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
@@ -202,7 +177,7 @@ class MainTeacherActivity : AppCompatActivity() {
                 numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK))
             )
 
-            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+            Common.loggedInTeacher?.let { it1 -> loadSchedule(it1) }
         }
 
         calendarButton.setOnClickListener {
@@ -215,7 +190,7 @@ class MainTeacherActivity : AppCompatActivity() {
             datePicker.visibility = View.GONE
             checkButton.visibility = View.GONE
             calendarButton.visibility = View.VISIBLE
-            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+            Common.loggedInTeacher?.let { it1 -> loadSchedule(it1) }
         }
 
         val navListener = NavigationView.OnNavigationItemSelectedListener { item ->
