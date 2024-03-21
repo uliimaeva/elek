@@ -1,5 +1,6 @@
 package pp.dair.activities
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -148,6 +149,7 @@ class TeacherSchedule : AppCompatActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_schedule)
@@ -163,8 +165,6 @@ class TeacherSchedule : AppCompatActivity() {
         datePicker = findViewById(R.id.datePicker1)
         search_TIL = hView.findViewById(R.id.search_TIL)
         linearLayout = findViewById(R.id.textText)
-
-//        search_TIET = hView.findViewById(R.id.search_TIET)
 
         listView = hView.findViewById(R.id.listTeacher)
         listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)

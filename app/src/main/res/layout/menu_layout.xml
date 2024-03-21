@@ -2,29 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menuLinear"
+    android:layout_centerInParent="true">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_TIL"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layoutDirection="rtl"
         android:searchIcon="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/search_TIL"
-        android:fillViewport="true">
-
-        <ListView
-            android:id="@+id/listTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
+    <ListView
+        android:id="@+id/listTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="590dp"
+        android:layout_below="@id/search_TIL"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"/>
 
 </RelativeLayout>
