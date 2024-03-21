@@ -8,7 +8,7 @@
     android:background="@color/primary">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
         <LinearLayout
@@ -99,23 +99,34 @@
             android:textColor="@color/primary_text"
             android:textSize="20sp"
             android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/fioTeacher"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text"
-            android:text="Борзиловой Людмилы Викторовны"
-            android:textAlignment="center"
-            android:textColor="@color/primary_text"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/t_sheadule"
-        android:layout_below="@+id/fioTeacher"
+        android:layout_below="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/textText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:text="Для выбора преподавателя откройте боковое меню"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:textColor="@color/primary_text_trans"
+                android:textStyle="bold"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_double_arrow"
+                android:layout_gravity="center"/>
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -126,5 +137,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/menu_layout"
         app:menu="@menu/search_menu"/>
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

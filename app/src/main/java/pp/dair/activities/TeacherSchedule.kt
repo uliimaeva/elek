@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -41,8 +42,6 @@ class TeacherSchedule : AppCompatActivity() {
     lateinit var header: TextView
     private lateinit var left_button: ImageButton
     private lateinit var  right_button: ImageButton
-    private lateinit var fioTeacher: TextView
-    //private lateinit var journalButton: ImageButton
     private lateinit var datePicker: DatePicker
     private lateinit var calendarButton: ImageButton
     private lateinit var checkButton: ImageButton
@@ -52,6 +51,7 @@ class TeacherSchedule : AppCompatActivity() {
     private var teachers: ArrayList<String> = arrayListOf()
     private var teachersStaff: ArrayList<Staff> = arrayListOf()
     private var teacherArray: ArrayList<LessonWithGroup> = ArrayList()
+    private lateinit var linearLayout: LinearLayout
 
     var day = calendar.get(Calendar.DAY_OF_MONTH)
     var year = calendar.get(Calendar.YEAR)
@@ -118,8 +118,6 @@ class TeacherSchedule : AppCompatActivity() {
                         Log.d("HUI", lesson.toString())
                     }
                     adapter.setArray(response.body()!!)
-                    fioTeacher.visibility = View.VISIBLE
-//                    fioTeacher.text
                 } else {
                     showToast("Технические шоколадки 2")
                     adapter.setArray(ArrayList())
@@ -163,8 +161,9 @@ class TeacherSchedule : AppCompatActivity() {
         calendarButton = findViewById(R.id.calendar)
         checkButton = findViewById(R.id.check)
         datePicker = findViewById(R.id.datePicker1)
-        fioTeacher = findViewById(R.id.fioTeacher)
         search_TIL = hView.findViewById(R.id.search_TIL)
+        linearLayout = findViewById(R.id.textText)
+
 //        search_TIET = hView.findViewById(R.id.search_TIET)
 
         listView = hView.findViewById(R.id.listTeacher)
@@ -181,7 +180,10 @@ class TeacherSchedule : AppCompatActivity() {
                 for (teacher in teachersStaff) {
                     if (getStaffName(teacher) == selectedTeacherName) {
                         Common.selectedTeacher = teacher.id
-                        Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+                        Common.selectedTeacher?.let {
+                                it1 -> loadSchedule(it1)
+                                linearLayout.visibility = View.GONE
+                        }
                     }
                 }
                 if (Common.selectedTeacher == null) {

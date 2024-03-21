@@ -61,7 +61,7 @@ class JournalActivity : AppCompatActivity() {
         return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
     }
 
-    fun showToast(text: String) {67
+    fun showToast(text: String) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
