@@ -33,7 +33,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.Calendar
 
-class TeacherSchedule : AppCompatActivity() {
+class GroupSchedule : AppCompatActivity() {
 
     private  var viewModel: StaffViewModel = StaffViewModel()
     private lateinit var recyclerView: RecyclerView
@@ -50,7 +50,6 @@ class TeacherSchedule : AppCompatActivity() {
     private lateinit var search_TIET: TextInputEditText
     private var teachers: ArrayList<String> = arrayListOf()
     private var teachersStaff: ArrayList<Staff> = arrayListOf()
-    private var teacherArray: ArrayList<LessonWithGroup> = ArrayList()
     private lateinit var linearLayout: LinearLayout
 
     var day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -163,9 +162,6 @@ class TeacherSchedule : AppCompatActivity() {
         datePicker = findViewById(R.id.datePicker1)
         search_TIL = hView.findViewById(R.id.search_TIL)
         linearLayout = findViewById(R.id.textText)
-
-//        search_TIET = hView.findViewById(R.id.search_TIET)
-
         listView = hView.findViewById(R.id.listTeacher)
         listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
 
