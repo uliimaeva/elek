@@ -1,12 +1,18 @@
 package pp.dair.activities
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TableLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import pp.dair.PageAdapter
 import pp.dair.R
 import pp.dair.adapters.MainNoteAdapter
 import pp.dair.adapters.NoteAdapter
@@ -21,42 +27,18 @@ import java.util.Calendar
 
 class NotesActivity : AppCompatActivity() {
 
-    private var viewModel: NoteViewModel = NoteViewModel()
-    private lateinit var recyclerView: RecyclerView
-    lateinit var adapter: MainNoteAdapter
+    private lateinit var viewPager: ViewPager
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
 
-        recyclerView = findViewById(R.id.noteRecycler)
+        viewPager = findViewById(R.id.view_pager)
+        viewPager.adapter = PageAdapter(supportFragmentManager)
 
-        adapter = MainNoteAdapter(emptyMap(), this, this)
-        adapter.listener = { loadNotes() }
-        recyclerView.layoutManager = GridLayoutManager(this, 1)
-        recyclerView.adapter = adapter
+        tabLayout = findViewById(R.id.tabLayout)
+        tabLayout.setupWithViewPager(viewPager)
 
-        loadNotes()
-    }
-
-    fun loadNotes() {
-        Log.d("NOTES", "Loading notes!")
-        viewModel.getSegmentedNotes(object: Callback<Map<String, ArrayList<Note>>> {
-            override fun onResponse(
-                call: Call<Map<String, ArrayList<Note>>>,
-                response: Response<Map<String, ArrayList<Note>>>
-            ) {
-                if (response.isSuccessful) {
-                    adapter.setArray(response.body()!!)
-                } else {
-                    Log.d("ERR", "Шоколадки 2")
-                    adapter.setArray(emptyMap())
-                }
-            }
-
-            override fun onFailure(call: Call<Map<String, ArrayList<Note>>>, t: Throwable) {
-                Log.d("ERR", t.toString())
-            }
-        })
     }
 }
