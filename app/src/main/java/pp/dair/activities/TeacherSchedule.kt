@@ -169,6 +169,9 @@ class TeacherSchedule : AppCompatActivity() {
         listView = hView.findViewById(R.id.listTeacher)
         listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
 
+
+
+
         listView.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(
                 parent: AdapterView<*>?,

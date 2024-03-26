@@ -3,13 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menuLinear"
     android:layout_centerInParent="true">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_TIL"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layoutDirection="rtl"
         android:searchIcon="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,9 +18,8 @@
     <ListView
         android:id="@+id/listTeacher"
         android:layout_width="match_parent"
-        android:layout_height="590dp"
+        android:layout_height="585dp"
         android:layout_below="@id/search_TIL"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"/>
+        android:scrollbarSize="10dp"/>
 
 </RelativeLayout>
