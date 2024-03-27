@@ -72,6 +72,12 @@ interface RetrofitService {
     @GET("staff/teachers")
     fun getTeachers(): Call<ArrayList<Staff>>
 
+    @GET("groups/")
+    fun getGroups(): Call<ArrayList<Group>>
+
+    @GET("schedule/{group_id}/{year}/{month}/{day}")
+    fun getGroupSchedule(@Path("group_id") groupId: Int, @Path("year") year: Int, @Path("month") month: Int, @Path("day") day: Int): Call<ArrayList<BaseLesson>>
+
     @GET("staff/schedule/{staff_id}/{year}/{month}/{day}")
     fun getTeacherSchedule(@Path("staff_id") staffId: Int, @Path("year") year: Int, @Path("month") month: Int, @Path("day") day: Int): Call<ArrayList<LessonWithGroup>>
 }
