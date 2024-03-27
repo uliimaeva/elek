@@ -34,6 +34,9 @@
             android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.GroupSchedule"
+            android:exported="false"/>
+        <activity
             android:name=".activities.AuthActivity"
             android:exported="true">
             <intent-filter>

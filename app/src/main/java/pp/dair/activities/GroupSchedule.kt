@@ -137,11 +137,10 @@ class GroupSchedule : AppCompatActivity() {
     fun filterList(text: String) {
         groups.clear()
         for (item in groups) {
-            val name = item
-            Log.d("SEARCH", String.format("Comparing %s and %s", name, text))
-            if (name.contains(text, ignoreCase = true)) {
-                Log.d("SEARCH", String.format("Matched %s", name));
-                groups.add(name)
+            Log.d("SEARCH", String.format("Comparing %s and %s", item, text))
+            if (item.contains(text, ignoreCase = true)) {
+                Log.d("SEARCH", String.format("Matched %s", item));
+                groups.add(item)
             }
         }
         if (groups.isEmpty()) {
@@ -178,7 +177,7 @@ class GroupSchedule : AppCompatActivity() {
             ) {
                 val selectedGroup = groups.get(position)
                 for (group in groupList) {
-                    if (group.toString() == selectedGroup) {
+                    if (group.name == selectedGroup) {
                         Common.selectedGroup = group.id
                         Common.selectedGroup?.let {
                                 it1 -> loadSchedule(it1)
@@ -202,7 +201,7 @@ class GroupSchedule : AppCompatActivity() {
                 if (response.isSuccessful) {
                     groupList = response.body()!!
                     groups.clear()
-                    groups.addAll(ArrayList(response.body()!!.map { it.toString() }))
+                    groups.addAll(ArrayList(response.body()!!.map { it.name }))
                     (listView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
                     Log.d("SUCCESS", groups.toString())
                 }
