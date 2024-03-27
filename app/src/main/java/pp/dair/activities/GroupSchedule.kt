@@ -22,11 +22,15 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import pp.dair.R
+import pp.dair.adapters.ScheduleGroupAdapter
 import pp.dair.adapters.ScheduleTeacherAdapter
+import pp.dair.models.BaseLesson
+import pp.dair.models.Group
 import pp.dair.models.LessonWithGroup
 import pp.dair.models.Staff
 import pp.dair.models.getStaffName
 import pp.dair.retrofit.Common
+import pp.dair.viewmodels.GroupViewModel
 import pp.dair.viewmodels.StaffViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,9 +39,9 @@ import java.util.Calendar
 
 class GroupSchedule : AppCompatActivity() {
 
-    private  var viewModel: StaffViewModel = StaffViewModel()
+    private  var viewModel: GroupViewModel = GroupViewModel()
     private lateinit var recyclerView: RecyclerView
-    lateinit var adapter: ScheduleTeacherAdapter
+    lateinit var adapter: ScheduleGroupAdapter
     private val calendar = Calendar.getInstance()
     lateinit var header: TextView
     private lateinit var left_button: ImageButton
@@ -48,8 +52,8 @@ class GroupSchedule : AppCompatActivity() {
     private lateinit var listView: ListView
     private lateinit var search_TIL: SearchView
     private lateinit var search_TIET: TextInputEditText
-    private var teachers: ArrayList<String> = arrayListOf()
-    private var teachersStaff: ArrayList<Staff> = arrayListOf()
+    private var groups: ArrayList<String> = arrayListOf()
+    private var groupList: ArrayList<Group> = arrayListOf()
     private lateinit var linearLayout: LinearLayout
 
     var day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -106,10 +110,10 @@ class GroupSchedule : AppCompatActivity() {
     }
 
     fun loadSchedule(id: Int) {
-        viewModel.getTeacherSchedule(id, year, month, day, object : Callback<ArrayList<LessonWithGroup>> {
+        viewModel.getGroupSchedule(id, year, month, day, object : Callback<ArrayList<BaseLesson>> {
             override fun onResponse(
-                call: Call<ArrayList<LessonWithGroup>>,
-                response: Response<ArrayList<LessonWithGroup>>,
+                call: Call<ArrayList<BaseLesson>>,
+                response: Response<ArrayList<BaseLesson>>,
             ) {
                 if (response.isSuccessful) {
                     Log.d("HUI", "Расписание получено!")
@@ -123,7 +127,7 @@ class GroupSchedule : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<LessonWithGroup>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<BaseLesson>>, t: Throwable) {
                 adapter.setArray(ArrayList())
                 showToast("Технические шоколадки!")
             }
@@ -131,19 +135,19 @@ class GroupSchedule : AppCompatActivity() {
     }
 
     fun filterList(text: String) {
-        teachers.clear()
-        for (item in teachersStaff) {
-            val fio = getStaffName(item)
-            Log.d("SEARCH", String.format("Comparing %s and %s", fio, text))
-            if (fio.contains(text, ignoreCase = true)) {
-                Log.d("SEARCH", String.format("Matched %s", fio));
-                teachers.add(getStaffName(item))
+        groups.clear()
+        for (item in groups) {
+            val name = item
+            Log.d("SEARCH", String.format("Comparing %s and %s", name, text))
+            if (name.contains(text, ignoreCase = true)) {
+                Log.d("SEARCH", String.format("Matched %s", name));
+                groups.add(name)
             }
         }
-        if (teachers.isEmpty()) {
-            Toast.makeText(this, "Такого преподавателя нет", Toast.LENGTH_SHORT).show()
+        if (groups.isEmpty()) {
+            Toast.makeText(this, "Такой группы нет", Toast.LENGTH_SHORT).show()
         }
-        listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
+        listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, groups)
     }
 
 
@@ -163,7 +167,7 @@ class GroupSchedule : AppCompatActivity() {
         search_TIL = hView.findViewById(R.id.search_TIL)
         linearLayout = findViewById(R.id.textText)
         listView = hView.findViewById(R.id.listTeacher)
-        listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, teachers)
+        listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, groups)
 
         listView.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(
@@ -172,17 +176,17 @@ class GroupSchedule : AppCompatActivity() {
                 position: Int,
                 id: Long,
             ) {
-                val selectedTeacherName = teachers.get(position)
-                for (teacher in teachersStaff) {
-                    if (getStaffName(teacher) == selectedTeacherName) {
-                        Common.selectedTeacher = teacher.id
-                        Common.selectedTeacher?.let {
+                val selectedGroup = groups.get(position)
+                for (group in groupList) {
+                    if (group.toString() == selectedGroup) {
+                        Common.selectedGroup = group.id
+                        Common.selectedGroup?.let {
                                 it1 -> loadSchedule(it1)
                                 linearLayout.visibility = View.GONE
                         }
                     }
                 }
-                if (Common.selectedTeacher == null) {
+                if (Common.selectedGroup == null) {
                     // ошибка что учитель не найден
                 } else {
                     // чо-нить открываем делаем
@@ -190,26 +194,26 @@ class GroupSchedule : AppCompatActivity() {
             }
         }
 
-        StaffViewModel().getTeachers(object : Callback<ArrayList<Staff>> {
+        GroupViewModel().getGroups(object : Callback<ArrayList<Group>> {
             override fun onResponse(
-                call: Call<ArrayList<Staff>>,
-                response: Response<ArrayList<Staff>>,
+                call: Call<ArrayList<Group>>,
+                response: Response<ArrayList<Group>>,
             ) {
                 if (response.isSuccessful) {
-                    teachersStaff = response.body()!!
-                    teachers.clear()
-                    teachers.addAll(ArrayList(response.body()!!.map { getStaffName(it) }))
+                    groupList = response.body()!!
+                    groups.clear()
+                    groups.addAll(ArrayList(response.body()!!.map { it.toString() }))
                     (listView.adapter as ArrayAdapter<*>).notifyDataSetChanged()
-                    Log.d("SUCCESS", teachers.toString())
+                    Log.d("SUCCESS", groups.toString())
                 }
             }
 
-            override fun onFailure(call: Call<ArrayList<Staff>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<Group>>, t: Throwable) {
                 Log.d("ERROR", "pipec")
             }
         })
 
-        adapter = ScheduleTeacherAdapter(ArrayList(), this, this)
+        adapter = ScheduleGroupAdapter(ArrayList(), this, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
 

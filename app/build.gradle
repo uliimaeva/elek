@@ -56,6 +56,4 @@ dependencies {
     //noinspection NotInterpolated
     implementation 'androidx.core:core-ktx:$core_version'
 
-    implementation 'com.google.android.material:material:1.1.0-alpha08'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta02'
 }

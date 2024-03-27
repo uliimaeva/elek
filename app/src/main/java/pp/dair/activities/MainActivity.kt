@@ -247,6 +247,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this, TeacherSchedule::class.java))
                 }
 
+                R.id.p_groups -> {
+                    startActivity(Intent(this, GroupSchedule::class.java))
+                }
+
                 R.id.p_Note -> {
                     startActivity(Intent(this, NotesActivity::class.java))
                 }
