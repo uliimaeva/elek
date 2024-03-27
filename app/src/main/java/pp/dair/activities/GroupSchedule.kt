@@ -236,7 +236,7 @@ class GroupSchedule : AppCompatActivity() {
                 year,
                 numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK))
             )
-            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+            Common.selectedGroup?.let { it1 -> loadSchedule(it1) }
         }
         right_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
@@ -251,7 +251,7 @@ class GroupSchedule : AppCompatActivity() {
                 numberToWeekDay(calendar.get(Calendar.DAY_OF_WEEK))
             )
 
-            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+            Common.selectedGroup?.let { it1 -> loadSchedule(it1) }
         }
 
         calendarButton.setOnClickListener {
@@ -264,7 +264,7 @@ class GroupSchedule : AppCompatActivity() {
             datePicker.visibility = View.GONE
             checkButton.visibility = View.GONE
             calendarButton.visibility = View.VISIBLE
-            Common.selectedTeacher?.let { it1 -> loadSchedule(it1) }
+            Common.selectedGroup?.let { it1 -> loadSchedule(it1) }
         }
 
         val navListener = NavigationView.OnNavigationItemSelectedListener { item ->
