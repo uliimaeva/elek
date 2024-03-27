@@ -31,14 +31,14 @@ class ScheduleGroupAdapter(
 
     class MyViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val subject: TextView = itemView.findViewById(R.id.sub_name)
-        val group: TextView = itemView.findViewById(R.id.group)
+        val pre: TextView = itemView.findViewById(R.id.pre)
         val aud: TextView = itemView.findViewById(R.id.aud)
         val mainLayout: RelativeLayout = item.findViewById(R.id.mainLayout)
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.shedule_recycler_teacher, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.shedule_recycler_group, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -49,7 +49,7 @@ class ScheduleGroupAdapter(
         }
         holder.subject.text = subject_header
         holder.aud.text = scheduleArray[position].audience
-        holder.group.text = scheduleArray[position].teacher
+        holder.pre.text = scheduleArray[position].teacher
 
 //
 //        holder.mainLayout.setOnClickListener(View.OnClickListener {

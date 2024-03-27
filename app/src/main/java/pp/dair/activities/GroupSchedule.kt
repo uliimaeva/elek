@@ -152,7 +152,7 @@ class GroupSchedule : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher_schedule)
+        setContentView(R.layout.activity_group_schedule)
 
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
         val hView = navigationView.getHeaderView(0)
@@ -186,7 +186,7 @@ class GroupSchedule : AppCompatActivity() {
                     }
                 }
                 if (Common.selectedGroup == null) {
-                    // ошибка что учитель не найден
+                    // ошибка что группа не найдена
                 } else {
                     // чо-нить открываем делаем
                 }
@@ -270,14 +270,6 @@ class GroupSchedule : AppCompatActivity() {
         val navListener = NavigationView.OnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
-//                R.id.p_Back -> {
-//                    startActivity(Intent(this, MainActivity::class.java))
-//                }
-//                R.id.p_Exit -> {
-//                    val manager = supportFragmentManager
-//                    val myDialogFragment = MyDialogFragment()
-//                    myDialogFragment.show(manager, "myDialog")
-//                }
 
             }
             true
