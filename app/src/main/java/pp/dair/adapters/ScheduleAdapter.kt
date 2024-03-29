@@ -35,6 +35,8 @@ class ScheduleAdapter(
         val mark: TextView = itemView.findViewById(R.id.mark)
         val marker: ImageView = itemView.findViewById(R.id.visit)
         val mainLayout: RelativeLayout = item.findViewById(R.id.mainLayout)
+        val audName: TextView = item.findViewById(R.id.aud)
+        val pre: TextView = itemView.findViewById(R.id.pre)
     }
 
 
@@ -49,6 +51,8 @@ class ScheduleAdapter(
             subject_header += String.format(" (%d п/г)", scheduleArray[position].subgroup)
         }
         holder.subject.text = subject_header
+        holder.audName.text = scheduleArray[position].audience
+        holder.pre.text = scheduleArray[position].teacher
         holder.mark.text = ""
         if (scheduleArray[position].mark != null) {
             holder.mark.text = scheduleArray[position].mark!!.mark

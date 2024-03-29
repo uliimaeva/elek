@@ -4,13 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SortedList
 import pp.dair.R
 import pp.dair.adapters.JournalAdapter
 import pp.dair.models.JournalFinalMark
@@ -48,17 +46,13 @@ class JournalActivity : AppCompatActivity() {
         return Pair(Common.studentInfo!!.group.course, 2)
     }
 
-    fun getAcademicYear1(): Int {
+    fun getAcademicYear(): Int {
         if (semester/2 == 0) {
-            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
+            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course - 1
         }
         else{
-            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course + 1
+            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
         }
-    }
-
-    fun getAcademicYear2(): Int {
-        return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
     }
 
     fun showToast(text: String) {
@@ -221,8 +215,8 @@ class JournalActivity : AppCompatActivity() {
 
 
     fun loadSemesterMarks() {
-        header.text = String.format("%d семестр, %d курс (%d)", semester, course, getAcademicYear2())
-        viewModel.getFinalSemesterMarks(getAcademicYear2(), semester, object: Callback<ArrayList<JournalFinalMark>> {
+        header.text = String.format("%d семестр, %d курс (%d)", semester, course, getAcademicYear())
+        viewModel.getFinalSemesterMarks(getAcademicYear(), semester, object: Callback<ArrayList<JournalFinalMark>> {
             override fun onResponse(
                 call: Call<ArrayList<JournalFinalMark>>,
                 response: Response<ArrayList<JournalFinalMark>>
@@ -241,7 +235,7 @@ class JournalActivity : AppCompatActivity() {
         })
 
         viewModel.getSegmentedSemesterMarks(
-            getAcademicYear1(),
+            getAcademicYear(),
             semester,
             object : Callback<Map<String, ArrayList<JournalMark>>> {
                 override fun onResponse(

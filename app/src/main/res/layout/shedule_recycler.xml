@@ -12,41 +12,83 @@
         android:background="@color/white"
         android:layout_margin="5dp">
 
+        <ImageView
+            android:id="@+id/visit"
+            android:layout_width="5dp"
+            android:layout_height="100dp"
+            android:src="@drawable/visit_line_blue"
+            android:layout_weight="0"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
 
-            <ImageView
-                android:id="@+id/visit"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:src="@drawable/visit_line_blue"
-                android:layout_weight="0"/>
 
-            <TextView
-                android:id="@+id/sub_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sub_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:textSize="20sp"
+                    android:text="Писька"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text"
+                    android:layout_weight="0"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="20sp"
-                android:text="Писька"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/mark"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/primary_text"
-                android:layout_weight="0"
-                android:layout_margin="10dp"
-                android:layout_gravity="center"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Ауд:"
+                    android:textColor="@color/primary_text"/>
+                <TextView
+                    android:id="@+id/aud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="352"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_weight="0"
+                    android:textColor="@color/primary_text"/>
+                <TextView
+                    android:id="@+id/pre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Сабирова Алина Фаизовна"
+                    android:textSize="16sp"
+                    android:textAlignment="viewEnd"
+                    android:layout_weight="1"
+                    android:textColor="@color/primary_text"
+                    android:layout_marginRight="5dp"/>
+            </LinearLayout>
+
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
