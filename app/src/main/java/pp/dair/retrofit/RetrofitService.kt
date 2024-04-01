@@ -80,4 +80,7 @@ interface RetrofitService {
 
     @GET("staff/schedule/{staff_id}/{year}/{month}/{day}")
     fun getTeacherSchedule(@Path("staff_id") staffId: Int, @Path("year") year: Int, @Path("month") month: Int, @Path("day") day: Int): Call<ArrayList<LessonWithGroup>>
+
+    @GET("staff/load/{staff_id}/{year}/{month}")
+    fun getTeacherLoad(@Header("Session") session: String, @Path("staff_id") staffId: Int, @Path("year") year: Int, @Path("month") month: Int): Call<TeacherLoadResponse>
 }
