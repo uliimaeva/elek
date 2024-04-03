@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Login"
-                android:text="gxJ92"/>
+                android:text="565656"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:text="X2j5"/>
+                android:text="gaPwdijulk@"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -101,7 +101,8 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Введите капчу"/>
+                    android:hint="Введите капчу"
+                    android:text="text"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 

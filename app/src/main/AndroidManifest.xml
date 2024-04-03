@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.HoursActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.MainTeacherActivity"
             android:exported="false" />
         <activity
@@ -38,7 +41,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.GroupSchedule"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".activities.AuthActivity"
             android:exported="true">

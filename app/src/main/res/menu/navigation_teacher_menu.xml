@@ -6,6 +6,14 @@
         android:icon="@drawable/ic_journal"
         android:title="Расписание преподавателя" />
     <item
+        android:id="@+id/p_group"
+        android:icon="@drawable/ic_journal"
+        android:title="Расписание группы" />
+    <item
+        android:id="@+id/p_hours"
+        android:icon="@drawable/ic_journal"
+        android:title="Ведомость" />
+    <item
         android:id="@+id/p_Note"
         android:icon="@drawable/ic_calendaar"
         android:title="Заметки"/>
