@@ -142,6 +142,8 @@ class MainTeacherActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = adapter
 
+        Common.loggedInTeacher?.let { loadSchedule(it) }
+
         header.text = String.format(
             "%d.%d.%d %s",
             day,
