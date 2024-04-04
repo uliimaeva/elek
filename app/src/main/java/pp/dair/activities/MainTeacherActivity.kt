@@ -202,7 +202,6 @@ class MainTeacherActivity : AppCompatActivity() {
                     startActivity(Intent(this, TeacherSchedule::class.java))
                 }
                 R.id.p_groups -> {
-                    Toast.makeText(this, "texttexttext", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, GroupSchedule::class.java))
                 }
                 R.id.p_hours -> {

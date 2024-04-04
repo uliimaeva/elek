@@ -144,7 +144,7 @@ class GroupSchedule : AppCompatActivity() {
             }
         }
         if (groups.isEmpty()) {
-            Toast.makeText(this, "Такой группы нет", Toast.LENGTH_SHORT).show()
+          Toast.makeText(this, "Такой группы нет", Toast.LENGTH_SHORT).show()
         }
         listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, groups)
     }

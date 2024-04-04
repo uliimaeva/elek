@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_journal"
         android:title="Расписание преподавателя" />
     <item
-        android:id="@+id/p_group"
+        android:id="@+id/p_groups"
         android:icon="@drawable/ic_journal"
         android:title="Расписание группы" />
     <item
