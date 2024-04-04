@@ -9,9 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
 import pp.dair.models.TeacherLoad
+import pp.dair.models.TeacherLoadResponse
 
 class HoursAdapter(
     private var totalMap: Map<String, TeacherLoad>,
+    private var leftMap: Map<String, TeacherLoad>,
     private val activity: Activity,
     private val context: Context,
 ): RecyclerView.Adapter<HoursAdapter.MyVewHolder>() {
@@ -33,15 +35,17 @@ class HoursAdapter(
         holder.group.text = mapList[position].second.group
         holder.subject.text = mapList[position].second.subject
         holder.readHours.text = mapList[position].second.hours.toString()
-        holder.remainHours.text = "-"
+        holder.remainHours.text = "-" // потом обновится, если данные в апи есть
+        holder.remainHours.text = leftMap[mapList[position].second.group]?.hours.toString()
     }
 
     override fun getItemCount(): Int {
         return totalMap.size
     }
 
-    fun setTotalMap(total: Map<String, TeacherLoad>) {
-        totalMap = total
+    fun setData(res: TeacherLoadResponse) {
+        totalMap = res.total
+        leftMap = res.left
         notifyDataSetChanged()
     }
 }

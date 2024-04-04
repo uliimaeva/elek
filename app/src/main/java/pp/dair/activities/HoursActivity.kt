@@ -28,7 +28,7 @@ class HoursActivity : AppCompatActivity() {
     private var calendar = Calendar.getInstance()
     private var viewModel: StaffViewModel = StaffViewModel()
     var month = calendar.get(Calendar.MONTH) + 1
-    private val adapter = HoursAdapter(emptyMap(), this, this)
+    private val adapter = HoursAdapter(emptyMap(), emptyMap(),this, this)
 
     fun monthName(value: Int): String {
         return when (value) {
@@ -55,7 +55,7 @@ class HoursActivity : AppCompatActivity() {
                 response: Response<TeacherLoadResponse>,
             ) {
                 if (response.isSuccessful) {
-                    adapter.setTotalMap(response.body()!!.total)
+                    adapter.setData(response.body()!!)
                 }
             }
 
