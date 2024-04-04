@@ -37,6 +37,7 @@ class ScheduleAdapter(
         val mainLayout: RelativeLayout = item.findViewById(R.id.mainLayout)
         val audName: TextView = item.findViewById(R.id.aud)
         val pre: TextView = itemView.findViewById(R.id.pre)
+        val time: TextView = itemView.findViewById(R.id.time)
     }
 
 
@@ -53,6 +54,7 @@ class ScheduleAdapter(
         holder.subject.text = subject_header
         holder.audName.text = scheduleArray[position].audience
         holder.pre.text = scheduleArray[position].teacher
+        holder.time.text = scheduleArray[position].teacher
         holder.mark.text = ""
         if (scheduleArray[position].mark != null) {
             holder.mark.text = scheduleArray[position].mark!!.mark

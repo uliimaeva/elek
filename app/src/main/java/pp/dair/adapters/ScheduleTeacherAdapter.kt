@@ -36,6 +36,7 @@ class ScheduleTeacherAdapter(
         val subject: TextView = itemView.findViewById(R.id.sub_name)
         val group: TextView = itemView.findViewById(R.id.group)
         val aud: TextView = itemView.findViewById(R.id.aud)
+        val time: TextView = itemView.findViewById(R.id.time)
         val mainLayout: RelativeLayout = item.findViewById(R.id.mainLayout)
     }
 
@@ -53,6 +54,7 @@ class ScheduleTeacherAdapter(
         holder.subject.text = subject_header
         holder.aud.text = scheduleArray[position].audience
         holder.group.text = scheduleArray[position].group
+        holder.time.text = scheduleArray[position].time
 
 //
 //        holder.mainLayout.setOnClickListener(View.OnClickListener {

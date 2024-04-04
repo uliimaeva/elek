@@ -75,13 +75,21 @@
                     android:textStyle="bold"
                     android:layout_weight="0"
                     android:textColor="@color/primary_text"/>
+
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:00 - 12:00"
+                    android:layout_marginHorizontal="15dp"/>
+
                 <TextView
                     android:id="@+id/pre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Сабирова Алина Фаизовна"
                     android:textSize="16sp"
-                    android:textAlignment="viewEnd"
                     android:layout_weight="1"
                     android:textColor="@color/primary_text"
                     android:layout_marginRight="5dp"/>
