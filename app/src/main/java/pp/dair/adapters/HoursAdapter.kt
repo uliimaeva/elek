@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
 import pp.dair.models.TeacherLoad
 import pp.dair.models.TeacherLoadResponse
+import kotlin.time.Duration.Companion.seconds
 
 class HoursAdapter(
     private var totalMap: Map<String, TeacherLoad>,
@@ -30,17 +31,29 @@ class HoursAdapter(
         return MyVewHolder(itemView)
     }
 
+    private fun processTotal(line: String): Int? {
+        val num = line.split("/")[0]
+        return num.toIntOrNull()
+    }
+
     override fun onBindViewHolder(holder: HoursAdapter.MyVewHolder, position: Int) {
-        val mapList = totalMap.toList()
-        holder.group.text = mapList[position].second.group
-        holder.subject.text = mapList[position].second.subject
-        holder.readHours.text = mapList[position].second.hours.toString()
-        holder.remainHours.text = "-" // потом обновится, если данные в апи есть
-        holder.remainHours.text = leftMap[mapList[position].second.group]
+        if (position != totalMap.size) {
+            val mapList = totalMap.toList()
+            holder.group.text = mapList[position].second.group
+            holder.subject.text = mapList[position].second.subject
+            holder.readHours.text = mapList[position].second.hours.toString()
+            holder.remainHours.text = "-" // потом обновится, если данные в апи есть
+            holder.remainHours.text = leftMap[mapList[position].second.group]?.split("/")?.get(0)
+        } else {
+            holder.group.text = ""
+            holder.subject.text = "Итого"
+            holder.readHours.text = totalMap.toList().map { it.second.hours }.sumOf { it ?: 0 }.toString()
+            holder.remainHours.text = leftMap.toList().map { processTotal(it.second) }.sumOf { it ?: 0 }.toString()
+        }
     }
 
     override fun getItemCount(): Int {
-        return totalMap.size
+        return totalMap.size + 1
     }
 
     fun setData(res: TeacherLoadResponse) {
