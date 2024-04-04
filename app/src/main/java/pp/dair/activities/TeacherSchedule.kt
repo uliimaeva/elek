@@ -171,7 +171,6 @@ class TeacherSchedule : AppCompatActivity() {
 
 
 
-
         listView.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(
                 parent: AdapterView<*>?,

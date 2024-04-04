@@ -13,7 +13,7 @@ import pp.dair.models.TeacherLoadResponse
 
 class HoursAdapter(
     private var totalMap: Map<String, TeacherLoad>,
-    private var leftMap: Map<String, TeacherLoad>,
+    private var leftMap: Map<String, String>,
     private val activity: Activity,
     private val context: Context,
 ): RecyclerView.Adapter<HoursAdapter.MyVewHolder>() {
@@ -36,7 +36,7 @@ class HoursAdapter(
         holder.subject.text = mapList[position].second.subject
         holder.readHours.text = mapList[position].second.hours.toString()
         holder.remainHours.text = "-" // потом обновится, если данные в апи есть
-        holder.remainHours.text = leftMap[mapList[position].second.group]?.hours.toString()
+        holder.remainHours.text = leftMap[mapList[position].second.group]
     }
 
     override fun getItemCount(): Int {
