@@ -8,22 +8,24 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@color/white"
-        android:layout_margin="5dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/visit"
             android:layout_width="5dp"
             android:layout_height="100dp"
-            android:src="@drawable/visit_line_blue"
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+            android:src="@drawable/visit_line_blue" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -35,64 +37,67 @@
                     android:id="@+id/sub_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="16dp"
-                    android:textSize="20sp"
+                    android:layout_weight="1"
                     android:text="Писька"
                     android:textColor="@color/black"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"/>
+                    android:textSize="20sp" />
+
                 <TextView
                     android:id="@+id/mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="20dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary_text"
                     android:layout_weight="0"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="center"/>
+                    android:text="5"
+                    android:textColor="@color/primary_text"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:text="Ауд:"
-                    android:textColor="@color/primary_text"/>
+                    android:textColor="@color/primary_text" />
+
                 <TextView
                     android:id="@+id/aud"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="352"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:layout_weight="0"
-                    android:textColor="@color/primary_text"/>
+                    android:text="352"
+                    android:textColor="@color/primary_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10:00 - 12:00"
-                    android:layout_marginHorizontal="15dp"/>
+                    android:layout_marginHorizontal="15dp"
+                    android:text="10:00 - 12:00" />
 
                 <TextView
                     android:id="@+id/pre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Сабирова Алина Фаизовна"
-                    android:textSize="16sp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
+                    android:text="Сабирова Алина Фаизовна"
                     android:textColor="@color/primary_text"
-                    android:layout_marginRight="5dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>

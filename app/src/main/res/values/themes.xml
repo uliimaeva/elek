@@ -2,7 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.Elek" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorSecondary">@color/secondary_text</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundColor">@color/white</item>
     </style>
 
 

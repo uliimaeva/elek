@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#A0A4BE</color>
+    <color name="secondary_text">#B3BDED</color>
+    <color name="primary_text">#9BA7CC</color>
+    <color name="primary_text_trans">#801B3065</color>
+    <color name="primary_dark">#4C6CAA</color>
+    <color name="primary">#032E4C</color>
+    <color name="trans">#00FFFFFF</color>
+    <color name="red">#F44336</color>
+
+
+</resources>

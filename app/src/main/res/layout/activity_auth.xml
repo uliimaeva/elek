@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AuthActivity"
-    android:background="@color/primary">
+    android:background="@color/primary"
+    style="@style/Theme.Elek">
 
     <ImageView
         android:layout_width="150dp"
