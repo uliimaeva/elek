@@ -166,6 +166,7 @@ class MainTeacherActivity : AppCompatActivity() {
             )
             Common.loggedInTeacher?.let { it1 -> loadSchedule(it1) }
         }
+
         right_button.setOnClickListener {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
             this.day = calendar.get(Calendar.DAY_OF_MONTH)
