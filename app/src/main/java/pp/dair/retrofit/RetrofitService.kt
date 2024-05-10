@@ -83,4 +83,19 @@ interface RetrofitService {
 
     @GET("staff/load/{staff_id}/{year}/{month}")
     fun getTeacherLoad(@Header("Session") session: String, @Path("staff_id") staffId: Int, @Path("year") year: Int, @Path("month") month: Int): Call<TeacherLoadResponse>
+
+    @GET("notes/teacher/")
+    fun getTeacherNotes(@Header("Session") session: String): Call<ArrayList<TeacherNote>>
+
+    @POST("notes/teacher/")
+    fun createTeacherNote(@Header("Session") session: String, @Body data: TeacherNoteCreate): Call<TeacherNote>
+
+    @DELETE("notes/teacher/id/{note_id}")
+    fun deleteTeacherNote(@Header("Session") session: String, @Path("note_id") noteId: Int): Call<Response<Void>>
+
+    @PATCH("notes/teacher/id/{note_id}")
+    fun patchTeacherNote(@Header("Session") session: String, @Path("note_id") noteId: Int, @Body data: NotePatch): Call<TeacherNote>
+
+    @GET("teacher/public")
+    fun getPublicNotes(@Header("Session") session: String): Call<ArrayList<TeacherNote>>
 }
