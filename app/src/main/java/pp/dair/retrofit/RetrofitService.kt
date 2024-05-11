@@ -96,6 +96,6 @@ interface RetrofitService {
     @PATCH("notes/teacher/id/{note_id}")
     fun patchTeacherNote(@Header("Session") session: String, @Path("note_id") noteId: Int, @Body data: NotePatch): Call<TeacherNote>
 
-    @GET("teacher/public")
+    @GET("notes/teacher/public")
     fun getPublicNotes(@Header("Session") session: String): Call<ArrayList<TeacherNote>>
 }
