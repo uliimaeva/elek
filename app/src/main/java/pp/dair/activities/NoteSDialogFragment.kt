@@ -54,7 +54,7 @@ class NoteSDialogFragment : DialogFragment() {
             addNote = inflater.findViewById(R.id.addButton)
             delNote = inflater.findViewById(R.id.delButton)
 
-            val formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy")
+            val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
             noteData.text = LocalDateTime.now().format(formatter)
             noteSub.text = Common.currentSub!!.subject
 
