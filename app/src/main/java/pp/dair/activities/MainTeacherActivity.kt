@@ -13,7 +13,9 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +33,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.Calendar
+import kotlin.system.exitProcess
 
 class MainTeacherActivity : AppCompatActivity() {
 
@@ -129,6 +132,14 @@ class MainTeacherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_teacher)
+
+        this.onBackPressedDispatcher.addCallback(this, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                ActivityCompat.finishAffinity(this@MainTeacherActivity)
+                exitProcess(0)
+            }
+        })
 
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
         recyclerView = findViewById(R.id.t_recycler)
