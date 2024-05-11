@@ -76,6 +76,7 @@ class NoteSDialogFragment : DialogFragment() {
 
 
     private fun noteDelete() {
+        if (noteId == null) { return }
         val noteViewModel: NoteViewModel = NoteViewModel()
         noteViewModel.deleteNote(
             noteId!!
