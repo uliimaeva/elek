@@ -10,7 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
 import pp.dair.adapters.MainNoteAdapter
+import pp.dair.adapters.TeacherGroupedNoteAdapter
 import pp.dair.models.Note
+import pp.dair.models.TeacherNote
+import pp.dair.retrofit.Common
+import pp.dair.utils.sortNotesByGroupAndSubject
+import pp.dair.utils.sortNotesByTeacherAndSubject
 import pp.dair.viewmodels.NoteViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,7 +25,7 @@ class PublicNotesFragment : Fragment() {
 
     private var viewModel: NoteViewModel = NoteViewModel()
     private lateinit var recyclerView: RecyclerView
-    lateinit var adapter: MainNoteAdapter
+    lateinit var adapter: TeacherGroupedNoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,23 +35,45 @@ class PublicNotesFragment : Fragment() {
 
     fun loadNotes() {
         Log.d("NOTES", "Loading notes!")
-        viewModel.getSegmentedNotes(object: Callback<Map<String, ArrayList<Note>>> {
-            override fun onResponse(
-                call: Call<Map<String, ArrayList<Note>>>,
-                response: Response<Map<String, ArrayList<Note>>>
-            ) {
-                if (response.isSuccessful) {
-                    adapter.setArray(response.body()!!)
-                } else {
-                    Log.d("ERR", "Шоколадки 2")
-                    adapter.setArray(emptyMap())
-                }
-            }
 
-            override fun onFailure(call: Call<Map<String, ArrayList<Note>>>, t: Throwable) {
-                Log.d("ERR", t.toString())
-            }
-        })
+        if (Common.isTeacher) {
+            viewModel.getTeacherNotes(object: Callback<ArrayList<TeacherNote>> {
+                override fun onResponse(
+                    p0: Call<ArrayList<TeacherNote>>,
+                    p1: Response<ArrayList<TeacherNote>>,
+                ) {
+                    if (p1.isSuccessful) {
+                        adapter.setArray(ArrayList(p1.body()!!.filter { it.public }))
+                    } else {
+                        adapter.setArray(arrayListOf())
+                        Log.d("ERR", "Failed to get teacher notes")
+                    }
+                }
+
+                override fun onFailure(p0: Call<ArrayList<TeacherNote>>, p1: Throwable) {
+                    Log.d("ERR", p1.toString())
+                }
+            })
+        } else {
+            viewModel.getPublicNotes(object: Callback<ArrayList<TeacherNote>> {
+                override fun onResponse(
+                    p0: Call<ArrayList<TeacherNote>>,
+                    p1: Response<ArrayList<TeacherNote>>,
+                ) {
+                    if (p1.isSuccessful) {
+                        adapter.setArray(p1.body()!!)
+                    } else {
+                        Log.d("ERR", "Шоколадки 2")
+                        adapter.setArray(arrayListOf())
+                    }
+                }
+
+                override fun onFailure(p0: Call<ArrayList<TeacherNote>>, p1: Throwable) {
+                    Log.d("ERR", p1.toString())
+                }
+
+            })
+        }
     }
 
     override fun onCreateView(
@@ -56,8 +83,14 @@ class PublicNotesFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_private_notes, container, false)
         recyclerView = rootView.findViewById(R.id.privateNoteRecycler)
 
-        adapter = MainNoteAdapter(emptyMap(), requireActivity(), requireContext())
-        adapter.listener = { loadNotes() }
+        adapter = TeacherGroupedNoteAdapter(arrayListOf(), requireActivity(), requireContext()) {
+            if (Common.isTeacher) {
+                sortNotesByGroupAndSubject(it)
+            } else {
+                sortNotesByTeacherAndSubject(it)
+            }
+        }
+        adapter.onOpenCallback = {}
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView.adapter = adapter
 
