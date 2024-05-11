@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
+import pp.dair.activities.NoteTeacherCreateFragment
+import pp.dair.activities.NoteTeacherEditFragment
 import pp.dair.adapters.MainNoteAdapter
 import pp.dair.adapters.TeacherGroupedNoteAdapter
 import pp.dair.models.Note
@@ -90,7 +93,11 @@ class PublicNotesFragment : Fragment() {
                 sortNotesByTeacherAndSubject(it)
             }
         }
-        adapter.onOpenCallback = {}
+        adapter.onOpenCallback = {
+            val scheduleDialogFragment = NoteTeacherEditFragment(it) { loadNotes() }
+            val manager = (context as AppCompatActivity).supportFragmentManager;
+            scheduleDialogFragment.show(manager, "noteEditDialog")
+        }
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView.adapter = adapter
 

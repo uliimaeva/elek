@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import pp.dair.R
+import pp.dair.activities.NoteTeacherCreateFragment
 import pp.dair.activities.ScheduleDialogFragment
 import pp.dair.models.LessonWithGroup
 import pp.dair.models.LessonWithMark
@@ -57,14 +58,11 @@ class ScheduleTeacherAdapter(
         holder.time.text = scheduleArray[position].time
 
 //
-//        holder.mainLayout.setOnClickListener(View.OnClickListener {
-//
-//            val scheduleDialogFragment = ScheduleDialogFragment()
-//            val manager = (context as AppCompatActivity).supportFragmentManager;
-//            scheduleDialogFragment.show(manager, "scheduleDialog")
-//            Common.currentSub = scheduleArray[position]
-//            listener?.invoke()
-//        })
+        holder.mainLayout.setOnClickListener(View.OnClickListener {
+            val scheduleDialogFragment = NoteTeacherCreateFragment(scheduleArray[position])
+            val manager = (context as AppCompatActivity).supportFragmentManager;
+            scheduleDialogFragment.show(manager, "scheduleDialog")
+        })
     }
 
 

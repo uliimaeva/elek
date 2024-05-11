@@ -54,7 +54,7 @@ class ScheduleAdapter(
         holder.subject.text = subject_header
         holder.audName.text = scheduleArray[position].audience
         holder.pre.text = scheduleArray[position].teacher
-        holder.time.text = scheduleArray[position].teacher
+        holder.time.text = scheduleArray[position].time
         holder.mark.text = ""
         if (scheduleArray[position].mark != null) {
             holder.mark.text = scheduleArray[position].mark!!.mark
@@ -68,7 +68,6 @@ class ScheduleAdapter(
         }
 
         holder.mainLayout.setOnClickListener(View.OnClickListener {
-
             val scheduleDialogFragment = ScheduleDialogFragment()
             val manager = (context as AppCompatActivity).supportFragmentManager;
             scheduleDialogFragment.show(manager, "scheduleDialog")
