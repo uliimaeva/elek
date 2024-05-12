@@ -20,8 +20,9 @@ class TeacherGroupedNoteAdapter(
     private val context: Context,
     private val groupLambda: (_: ArrayList<TeacherNote>) -> TreeMap<String, List<TeacherNote>>
 ): RecyclerView.Adapter<TeacherGroupedNoteAdapter.MyViewHolder>() {
-    private var orderedMap: TreeMap<String, List<TeacherNote>> = TreeMap(groupLambda(noteList))
+    private var orderedMap: TreeMap<String, List<TeacherNote>> = groupLambda(filterf(noteList))
 
+    var pattern: String = ""
     var onOpenCallback: ((TeacherNote) -> Unit)? = null
 
     class MyViewHolder (item: View): RecyclerView.ViewHolder(item) {
@@ -33,6 +34,13 @@ class TeacherGroupedNoteAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.note_recycler, parent, false)
         return MyViewHolder(itemView)
+    }
+
+    private fun filterf(notes: ArrayList<TeacherNote>): ArrayList<TeacherNote> {
+        if (pattern == null || pattern.isEmpty()) {
+            return notes
+        }
+        return ArrayList(notes.filter { it.title.contains(pattern, ignoreCase = true) || it.text.contains(pattern, ignoreCase = true) })
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -51,7 +59,12 @@ class TeacherGroupedNoteAdapter(
 
     fun setArray(notes: ArrayList<TeacherNote>) {
         this.noteList = notes
-        this.orderedMap = groupLambda(notes)
+        this.orderedMap = groupLambda(filterf(noteList))
+        notifyDataSetChanged()
+    }
+
+    fun updateMap() {
+        this.orderedMap = groupLambda(filterf(noteList))
         notifyDataSetChanged()
     }
 }

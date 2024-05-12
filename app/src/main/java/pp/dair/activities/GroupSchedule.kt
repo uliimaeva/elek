@@ -136,13 +136,12 @@ class GroupSchedule : AppCompatActivity() {
 
     fun filterList(text: String) {
         groups.clear()
-        for (item in groups) {
-            Log.d("SEARCH", String.format("Comparing %s and %s", item, text))
-            if (item.contains(text, ignoreCase = true)) {
-                Log.d("SEARCH", String.format("Matched %s", item));
-                groups.add(item)
-            }
+        if (text.isEmpty()) {
+            groups.addAll(groupList.map { it.name })
+            listView.adapter = ArrayAdapter(this, R.layout.menu_item_layout, groups)
+            return
         }
+        groups.addAll(groupList.filter { it.name.contains(text, ignoreCase = true) }.map { it.name })
         if (groups.isEmpty()) {
           Toast.makeText(this, "Такой группы нет", Toast.LENGTH_SHORT).show()
         }

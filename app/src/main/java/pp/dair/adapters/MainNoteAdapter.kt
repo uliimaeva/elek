@@ -24,13 +24,31 @@ class MainNoteAdapter (
     private val context: Context
 ): RecyclerView.Adapter<MainNoteAdapter.MyViewHolder>() {
     private var orderedMap: TreeMap<String, ArrayList<Note>> = TreeMap(noteMap)
+    private var filteredOrderedMap: TreeMap<String, ArrayList<Note>> = TreeMap()
 
     var listener: (() -> Unit)? = null
+    var pattern: String = ""
 
     class MyViewHolder (item: View): RecyclerView.ViewHolder(item) {
         val heading: TextView = itemView.findViewById(R.id.sub_name)
         val recyclerView: RecyclerView = item.findViewById(R.id.note_recycler)
         val mainLayout: RelativeLayout = itemView.findViewById(R.id.mainLayout)
+    }
+
+    fun filterMap() {
+        if (pattern.isEmpty()) {
+            filteredOrderedMap = orderedMap
+            return
+        }
+        val tMap: MutableMap<String, ArrayList<Note>> = mutableMapOf()
+        for (pair in noteMap) {
+            val filteredList = pair.value.filter { it.title.contains(pattern, ignoreCase = true) || it.text.contains(pattern, ignoreCase = true) }
+            if (filteredList.isNotEmpty()) {
+                tMap.set(pair.key, ArrayList(filteredList))
+            }
+        }
+        filteredOrderedMap = TreeMap(tMap)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -39,7 +57,7 @@ class MainNoteAdapter (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val tpl = orderedMap.toList().get(position)
+        val tpl = filteredOrderedMap.toList().get(position)
         holder.heading.text = tpl.first
 
         val adapter = NoteAdapter(ArrayList(tpl.second.filter { it.title.length > 0 }), activity, context)
@@ -49,12 +67,13 @@ class MainNoteAdapter (
     }
 
     override fun getItemCount(): Int {
-        return orderedMap.size
+        return filteredOrderedMap.size
     }
 
     fun setArray(map: Map<String, ArrayList<Note>>) {
         this.noteMap = map
         this.orderedMap = TreeMap(map)
+        filterMap()
         notifyDataSetChanged()
     }
 }

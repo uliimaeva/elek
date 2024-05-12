@@ -1,6 +1,8 @@
 package pp.dair.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import pp.dair.R
 import pp.dair.activities.NoteTeacherCreateFragment
 import pp.dair.activities.NoteTeacherEditFragment
@@ -84,6 +87,7 @@ class PublicNotesFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_private_notes, container, false)
+        val search_tiet = rootView.findViewById<TextInputEditText>(R.id.search_TIET)
         recyclerView = rootView.findViewById(R.id.privateNoteRecycler)
 
         adapter = TeacherGroupedNoteAdapter(arrayListOf(), requireActivity(), requireContext()) {
@@ -94,12 +98,25 @@ class PublicNotesFragment : Fragment() {
             }
         }
         adapter.onOpenCallback = {
-            val scheduleDialogFragment = NoteTeacherEditFragment(it) { loadNotes() }
+            val scheduleDialogFragment = NoteTeacherEditFragment(it, Common.isTeacher) { loadNotes() }
             val manager = (context as AppCompatActivity).supportFragmentManager;
             scheduleDialogFragment.show(manager, "noteEditDialog")
         }
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView.adapter = adapter
+
+        search_tiet.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                adapter.pattern = p0?.toString() ?: ""
+                adapter.updateMap()
+            }
+        })
 
         return rootView
     }

@@ -1,14 +1,20 @@
 package pp.dair.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import pp.dair.R
+import pp.dair.activities.NoteTeacherEditFragment
 import pp.dair.adapters.MainNoteAdapter
 import pp.dair.adapters.TeacherGroupedNoteAdapter
 import pp.dair.models.Note
@@ -79,6 +85,7 @@ class PrivateNotesFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_private_notes, container, false)
+        val search_tiet = rootView.findViewById<TextInputEditText>(R.id.search_TIET)
         recyclerView = rootView.findViewById(R.id.privateNoteRecycler)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
 
@@ -86,11 +93,42 @@ class PrivateNotesFragment : Fragment() {
             adapter = MainNoteAdapter(emptyMap(), requireActivity(), requireContext())
             adapter.listener = { loadNotes() }
             recyclerView.adapter = adapter
+
+            search_tiet.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    adapter.pattern = p0?.toString() ?: ""
+                    adapter.filterMap()
+                }
+            })
         } else {
             teacherAdapter = TeacherGroupedNoteAdapter(arrayListOf(), requireActivity(), requireContext()) {
                 sortNotesByGroupAndSubject(it)
             }
+            teacherAdapter.onOpenCallback = {
+                val scheduleDialogFragment = NoteTeacherEditFragment(it, Common.isTeacher) { loadNotes() }
+                val manager = (context as AppCompatActivity).supportFragmentManager;
+                scheduleDialogFragment.show(manager, "noteEditDialog")
+            }
             recyclerView.adapter = teacherAdapter
+
+            search_tiet.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                    teacherAdapter.pattern = p0?.toString() ?: ""
+                    teacherAdapter.updateMap()
+                }
+            })
         }
 
         return rootView

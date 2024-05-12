@@ -11,7 +11,6 @@
         android:id="@+id/noteName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -26,6 +25,16 @@
         android:textColor="@color/primary_text"
         android:paddingHorizontal="15dp"/>
     <TextView
+        android:id="@+id/noteGru"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ис-201б"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_text"
+        android:paddingHorizontal="15dp"/>
+
+    <TextView
         android:id="@+id/noteSub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,10 +44,34 @@
         android:textColor="@color/primary_text"
         android:paddingHorizontal="15dp"/>
 
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:src="@drawable/visit_line_blue"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Заметка создаетася для: "
+        android:layout_margin="5dp"/>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/s_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Для себя"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/s_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Для группы"/>
+    </RadioGroup>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

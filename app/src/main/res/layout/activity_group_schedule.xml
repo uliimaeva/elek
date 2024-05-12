@@ -110,22 +110,23 @@
             android:id="@+id/textText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:text="Для выбора группы откройте боковое меню"
-                android:textSize="25sp"
                 android:textAlignment="center"
                 android:textColor="@color/primary_text_trans"
-                android:textStyle="bold"/>
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_double_arrow"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:src="@drawable/ic_double_arrow" />
         </LinearLayout>
 
     </RelativeLayout>

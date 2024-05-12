@@ -7,6 +7,6 @@ plugins {
 
 configurations.all {
     resolutionStrategy {
-        force "androidx.core:core-ktx:1.10.1"
+        force "androidx.core:core-ktx:1.9.0"
     }
 }

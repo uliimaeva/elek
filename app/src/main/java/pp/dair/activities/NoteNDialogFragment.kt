@@ -60,11 +60,11 @@ class NoteNDialogFragment : DialogFragment() {
             noteText.editText!!.setText(Common.currentNote!!.text, TextView.BufferType.EDITABLE)
             noteId = Common.currentNote!!.id
 
+            noteText.counterMaxLength = 500
+
             addNote.setOnClickListener{
-                noteEdit()
-                dialog?.cancel()
-                onCloseHook?.invoke()
-                Toast.makeText(activity, "Заметка успешно отредактировалась!", Toast.LENGTH_SHORT).show()
+                validation()
+
             }
             delNote.setOnClickListener{
                 noteDelete()
@@ -76,6 +76,19 @@ class NoteNDialogFragment : DialogFragment() {
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    private fun validation() {
+        if (noteName.text.isEmpty()){
+            Toast.makeText(activity, "Имя не может быть путым!", Toast.LENGTH_SHORT).show()
+        } else if (noteEditText.text!!.isEmpty()){
+            Toast.makeText(activity, "Текст не может быть пустым!", Toast.LENGTH_SHORT).show()
+        } else {
+            noteEdit()
+            dialog?.cancel()
+            onCloseHook?.invoke()
+            Toast.makeText(activity, "Заметка успешно отредактировалась!", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

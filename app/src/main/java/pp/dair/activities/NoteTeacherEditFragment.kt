@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -25,6 +26,7 @@ import java.time.format.DateTimeFormatter
 
 class NoteTeacherEditFragment(
     val data: TeacherNote,
+    val isTeacher: Boolean,
     var onCloseHook: (() -> Unit)? = null
 ) : DialogFragment() {
     lateinit var noteName: EditText
@@ -58,22 +60,41 @@ class NoteTeacherEditFragment(
             noteSub.text = data.subject
             noteText.editText!!.setText(data.text, TextView.BufferType.EDITABLE)
 
-            addNote.setOnClickListener{
-                noteEdit()
-                dialog?.cancel()
-                onCloseHook?.invoke()
-                Toast.makeText(activity, "Заметка успешно отредактировалась!", Toast.LENGTH_SHORT).show()
-            }
-            delNote.setOnClickListener{
-                noteDelete()
-                dialog?.cancel()
-                onCloseHook?.invoke()
-                Toast.makeText(activity, "Заметка успешно удалилась!", Toast.LENGTH_SHORT).show()
-            }
+            noteText.counterMaxLength = 500
 
+            if (isTeacher) {
+
+                addNote.setOnClickListener{
+                    validation()
+                }
+                delNote.setOnClickListener{
+                    noteDelete()
+                    dialog?.cancel()
+                    onCloseHook?.invoke()
+                    Toast.makeText(activity, "Заметка успешно удалилась!", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+            else {
+                addNote.visibility = View.GONE
+                delNote.visibility = View.GONE
+            }
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
+    }
+
+    private fun validation() {
+        if (noteName.text.isEmpty()){
+            Toast.makeText(activity, "Имя не может быть путым!", Toast.LENGTH_SHORT).show()
+        } else if (noteEditText.text!!.isEmpty()){
+            Toast.makeText(activity, "Текст не может быть пустым!", Toast.LENGTH_SHORT).show()
+        } else {
+            noteEdit()
+            dialog?.cancel()
+            onCloseHook?.invoke()
+            Toast.makeText(activity, "Заметка успешно отредактировалась!", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
