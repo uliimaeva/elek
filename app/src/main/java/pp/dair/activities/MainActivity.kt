@@ -106,9 +106,9 @@ class MainActivity : AppCompatActivity() {
                 response: Response<ArrayList<LessonWithMark>>,
             ) {
                 if (response.isSuccessful) {
-                    Log.d("HUI", "Расписание получено!")
+                    Log.d("Success", "Расписание получено!")
                     for (lesson in response.body()!!) {
-                        Log.d("HUI", lesson.toString())
+                        Log.d("Success", lesson.toString())
                     }
                     adapter.setArray(response.body()!!)
                 } else {

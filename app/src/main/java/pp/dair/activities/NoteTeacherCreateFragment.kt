@@ -90,7 +90,6 @@ class NoteTeacherCreateFragment(val data: LessonWithGroup): DialogFragment() {
     }
 
     private fun noteAdd() {
-
         var pub = true
         pub = !sOne.isChecked
 

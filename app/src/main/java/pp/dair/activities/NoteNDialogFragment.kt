@@ -60,8 +60,6 @@ class NoteNDialogFragment : DialogFragment() {
             noteText.editText!!.setText(Common.currentNote!!.text, TextView.BufferType.EDITABLE)
             noteId = Common.currentNote!!.id
 
-            noteText.counterMaxLength = 500
-
             addNote.setOnClickListener{
                 validation()
 
@@ -112,7 +110,8 @@ class NoteNDialogFragment : DialogFragment() {
 
     private fun noteEdit() {
         val noteViewModel: NoteViewModel = NoteViewModel()
-        noteViewModel.patchNote(noteId!!, NotePatch(noteEditText.text.toString(), noteName.text.toString()), callback = object : Callback<Note> {
+        noteViewModel.patchNote(noteId!!, NotePatch(noteEditText.text.toString(),
+            noteName.text.toString()), callback = object : Callback<Note> {
             override fun onResponse(call: Call<Note>, response: Response<Note>) {
                 if (response.isSuccessful) {
                     Log.d("Patched", "Cool!")
