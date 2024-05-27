@@ -70,7 +70,7 @@
                     android:text="Сабирова Алина Фаизовна"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/primary_text"/>                 android:layout_gravity="center"/>
+                    android:textColor="@color/accent"/>                 android:layout_gravity="center"/>
             </LinearLayout>
 
         </LinearLayout>
