@@ -50,7 +50,7 @@
                         android:layout_marginHorizontal="15dp"
                         android:text="01.01.01 Понедельник"
                         android:textAlignment="center"
-                        android:textColor="@color/primary_text"
+                        android:textColor="@color/accent"
                         android:textSize="20sp"
                         android:textStyle="bold"/>
                     <ImageButton

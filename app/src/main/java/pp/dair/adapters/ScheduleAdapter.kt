@@ -47,6 +47,7 @@ class ScheduleAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.marker.setImageDrawable(getDrawable(activity, R.drawable.visit_line_blue))
         var subject_header = scheduleArray[position].number.toString() + ") " + scheduleArray[position].subject
         if (scheduleArray[position].subgroup != 0) {
             subject_header += String.format(" (%d п/г)", scheduleArray[position].subgroup)

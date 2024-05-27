@@ -41,7 +41,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:text="Писька"
-                    android:textColor="@color/black"
+                    android:textColor="@color/accent"
                     android:textSize="20sp" />
 
                 <TextView
@@ -54,7 +54,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_weight="0"
                     android:text="5"
-                    android:textColor="@color/primary_text"
+                    android:textColor="@color/accent"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>

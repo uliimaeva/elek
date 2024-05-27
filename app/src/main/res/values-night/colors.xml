@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="black">#000000</color>
-    <color name="white">#A0A4BE</color>
-    <color name="secondary_text">#B3BDED</color>
-    <color name="primary_text">#9BA7CC</color>
-    <color name="primary_text_trans">#801B3065</color>
-    <color name="primary_dark">#4C6CAA</color>
-    <color name="primary">#032E4C</color>
+    <color name="white">#484946</color>
+    <color name="secondary_text">#898989</color>
+    <color name="primary_text">#898988</color>
+    <color name="primary_text_trans">#6B1E2019</color>
+    <color name="primary_dark">#575853</color>
+    <color name="primary">#2D2E28</color>
     <color name="trans">#00FFFFFF</color>
     <color name="red">#F44336</color>
-
-
+    <color name="accent">#5fa8d3</color>
 </resources>

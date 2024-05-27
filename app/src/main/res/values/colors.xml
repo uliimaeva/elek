@@ -9,5 +9,5 @@
     <color name="primary">#cae9ff</color>
     <color name="trans">#00FFFFFF</color>
     <color name="red">#F44336</color>
-
+    <color name="accent">#1b4965</color>
 </resources>
