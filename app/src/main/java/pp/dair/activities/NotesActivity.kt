@@ -21,6 +21,7 @@ import pp.dair.adapters.NoteAdapter
 import pp.dair.adapters.ScheduleAdapter
 import pp.dair.models.LessonWithMark
 import pp.dair.models.Note
+import pp.dair.retrofit.Common
 import pp.dair.viewmodels.NoteViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,6 +49,20 @@ class NotesActivity : AppCompatActivity() {
         val navListener = NavigationView.OnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
+                R.id.p_min -> {
+                    if (!Common.isTeacher) {
+                        startActivity(Intent(this, MainActivity::class.java))
+                    } else {
+                        startActivity(Intent(this, MainTeacherActivity::class.java))
+                    }
+                }
+
+                R.id.p_journal -> {
+                    if (!Common.isTeacher) {
+                        startActivity(Intent(this, JournalActivity::class.java))
+                    }
+                }
+
                 R.id.p_teacher -> {
                     startActivity(Intent(this, TeacherSchedule::class.java))
                 }

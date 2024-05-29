@@ -47,12 +47,7 @@ class JournalActivity : AppCompatActivity() {
     }
 
     fun getAcademicYear(): Int {
-        if (semester/2 == 0) {
-            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course - 1
-        }
-        else{
-            return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
-        }
+        return calendar.get(Calendar.YEAR) - Common.studentInfo!!.group.course + course
     }
 
     fun showToast(text: String) {

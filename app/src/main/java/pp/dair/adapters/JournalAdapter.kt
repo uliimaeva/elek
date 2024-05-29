@@ -21,6 +21,7 @@ import pp.dair.activities.JournalActivity
 import pp.dair.models.JournalFinalMark
 import pp.dair.models.JournalMark
 import java.util.TreeMap
+import kotlin.math.round
 import kotlin.math.roundToInt
 
 class JournalAdapter(
@@ -85,6 +86,8 @@ class JournalAdapter(
             if (!filteredMark.mark.isNullOrEmpty()) {
                 holder.main_mark.text = filteredMark.mark
             }
+        } else if (!avg.isNaN()) {
+            holder.main_mark.text = round(avg).toInt().toString()
         }
 //        holder.marks.text = getRow(grouppedData[position].second)
 
