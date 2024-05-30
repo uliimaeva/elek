@@ -59,20 +59,27 @@ class NoteSDialogFragment : DialogFragment() {
             noteSub.text = Common.currentSub!!.subject
 
             addNote.setOnClickListener{
-                noteAdd()
-                dialog?.cancel()
-                Toast.makeText(activity, "Заметка успешно создалась!", Toast.LENGTH_SHORT).show()
+                validation()
             }
-            delNote.setOnClickListener{
-                noteDelete()
-                dialog?.cancel()
-                Toast.makeText(activity, "Заметка успешно удалилась!", Toast.LENGTH_SHORT).show()
-            }
+            delNote.visibility = View.GONE
 
 
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
+    private fun validation() {
+        if (noteName.text.isEmpty()){
+            Toast.makeText(activity, "Имя не может быть путым!", Toast.LENGTH_SHORT).show()
+        } else if (noteEditText.text!!.isEmpty()) {
+            Toast.makeText(activity, "Текст не может быть пустым!", Toast.LENGTH_SHORT).show()
+        } else {
+            noteAdd()
+            dialog?.cancel()
+            Toast.makeText(activity, "Заметка успешно создалась!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
 
     private fun noteDelete() {
